@@ -2,6 +2,8 @@
 
 ![cover](/img/grogue/cover.png)
 
+[Grogue在线Demo试玩](/projects/grogue-demo/grogue.html)，每周日更新。
+
 ## 2023.6.8 重启Grogue
 
 [Grogue](https://github.com/VisualGMQ/grogue)是一个从2021年起开始编写的RogueLite游戏，大致经历了三个阶段：

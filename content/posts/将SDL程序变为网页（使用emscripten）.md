@@ -65,7 +65,7 @@ em++ wasm_sdl_demo.cpp -s WASM=1 -s USE_SDL=2 -o index.html
 注意输出的是html。`USE_SDL=2`代表要使用SDL2。  
 emscripten会自己去下载对应的SDL，如果你觉得太慢的话也可以将SDL的源码自己clone下来，然后看他`docs/README-emscripten.md`文件来自己手动编译成wasm所需的SDL。编译的过程还挺快的。  
 
-编译好的网页在这里[Demo](/other_pages/wasm_sdl_demo/index.html)
+编译好的网页在这里[Demo](/projects/wasm_sdl_demo/index.html)
 
 ## 常用的编译选项
 
@@ -104,4 +104,4 @@ run:
 
 ## 另一个完整的小游戏
 
-[舞狮](https://visualgmq.gitee.io/projects/lion_dance/a.html)是一个完整的小游戏，你可以将此作为参考。
+[舞狮](https://visualgmq.github.io/projects/lion_dance/a.html)是一个完整的小游戏，你可以将此作为参考。[源码下载](/codes/lion_dance.zip)
