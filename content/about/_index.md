@@ -8,45 +8,17 @@ draft: false
 
 喜爱玩游戏和开发游戏的Coder。
 
-## 联系我
-
-* Github: [https://github.com/VisualGMQ](https://github.com/VisualGMQ)
-* 邮箱: 2142587070@qq.com
-* Gitee: [https://gitee.com/VisualGMQ](https://gitee.com/VisualGMQ)
-
-[![VisualGMQ's GitHub stats](https://github-readme-stats.vercel.app/api?username=VisualGMQ&show_icons=true&theme=gruvbox)](https://github.com/VisualGMQ)
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=VisualGMQ&layout=compact&hide=python,javascript,html,css)](https://github.com/VisualGMQ)
-
-## 我的B站
-
-我时常会在B站分享一些技术视频，有空可以来看看，有什么想让我做的也可以后台私信。
-
-[我的B站地址](https://space.bilibili.com/256768793)。
-
-目前已有系列：
-
-### Vulkan入门教程
-
-<a href="https://space.bilibili.com/256768793/channel/collectiondetail?sid=404887" target="-blank" title="PHP中文网logo">
-<img src="/img/vulkan_cover.jpeg">
-</a>
-
-
-### SDL入门教程
-
-<a href="https://space.bilibili.com/256768793/channel/collectiondetail?sid=545545" target="-blank" title="PHP中文网logo">
-<img src="/img/SDL_cover.png">
-</a>
-
-### CMake杂谈
-
-<a href="https://space.bilibili.com/256768793/channel/seriesdetail?sid=2275388" target="-blank" title="PHP中文网logo">
-<img src="/img/cmake_cover.png">
-</a>
-
-## 我编写的程序
-
-[自制程序合集](https://visualgmq.gitee.io/projects/)
-
-[Grogue](http://localhost:4000/grogue/)是我正在制作的一款TRoguelike游戏，目前正在持续开发，这里是开发日志。
+* 联系我：
+    * Github: [https://github.com/VisualGMQ](https://github.com/VisualGMQ)
+    * 邮箱: 2142587070@qq.com
+* [我的B站](https://space.bilibili.com/256768793)：我时常会在B站分享一些技术视频，有空可以来看看，有什么想让我做的也可以后台私信
+    * 图形学相关：
+        * [Vulkan入门教程](https://space.bilibili.com/256768793/channel/collectiondetail?sid=404887) [Github地址](https://github.com/VisualGMQ/toy2d)：介绍如何使用Vulkan制作一个2D渲染器，并了解Vulkan的方方面面
+        * [Rust软渲染教程](https://space.bilibili.com/256768793/channel/collectiondetail?sid=1251078) [Github地址](https://github.com/VisualGMQ/rs-cpurenderer)：介绍如何使用Rust编写软光栅化渲染器，有模拟GPU工作和CPU工作（扫描线算法）方式两种。最终可以从Obj文件载入模型并显示
+    * 游戏开发相关：
+        * [SDL入门教程](https://space.bilibili.com/256768793/channel/collectiondetail?sid=545545)
+        * [ECS框架造轮子](https://space.bilibili.com/256768793/channel/collectiondetail?sid=999942) [Github地址](https://github.com/VisualGMQ/gmq_header)：从0开始用C++制作ECS框架，参考了Entitas，EnTT等开源库的实现
+* 我编写的程序
+    * [自制小程序合集](https://visualgmq.github.io/projects/)
+    * [Grogue](https://visualgmq.github.io/grogue/)是我正在制作的一款Roguelite游戏，目前正在持续开发，这里是开发日志。游戏可[在线游玩](https://visualgmq.github.io/projects/grogue-demo/grogue.html)
+    * [YAGTE](https://github.com/VisualGMQ/yagte)：Yet Another Geometric Tool Engine。仿照[David Eberly的Geomentric Tool库](https://www.geometrictools.com/index.html)使用Rust进行仿写，用于学习其中的知识并做一些未来可用的代码

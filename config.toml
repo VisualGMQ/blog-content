@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://visualgmq.gitee.io/"
+baseURL = "https://visualgmq.github.io/"
 title = "VisualGMQ的博客"
 languageCode = "zh-CN"
 hasCJKLanguage = true
@@ -228,15 +228,12 @@ uglyURLs = false
         name = "Grogue"
         weight = 7
         pre = "internal"
-        post = ""
+        post = "grogue"
     [[menu.main]]
         weight = 8
         identifier = "theme-switcher"
     [[menu.main]]
         weight = 9
-        identifier = "lang-switcher"
-    [[menu.main]]
-        weight = 10
         identifier = "search"
         post = "search"
 
@@ -422,7 +419,7 @@ uglyURLs = false
     # 列表页面
 
     # 宽度
-    listWidth = 36
+    listWidth = 100
     # 说明：如果留空（""），则用 42 作为默认值
     #      单位：em
 
@@ -610,7 +607,7 @@ uglyURLs = false
     #      的优先级高于此处
 
     # 直接加载评论，不需要手动点击按钮加载
-    autoLoadComments = false
+    autoLoadComments = true
 
     ## Disqus
     enableDisqus = false

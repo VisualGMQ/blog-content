@@ -13,21 +13,9 @@ comments: false
 
 游戏使用python + pygame编写。
 
-## [SoftRenderer](https://github.com/VisualGMQ/SoftRenderer.git)
-
-软渲染器，使用C++和SDL。实现了整套渲染管线（除了模板测试和融混）。
-
-[这里](https://visualgmq.github.io/posts/%E4%BB%8E0%E5%BC%80%E5%A7%8B%E5%88%B6%E4%BD%9C%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8%E9%9B%B6/)
-
-有我做整个渲染器的知识点总结。  
-
-这里是效果图：
-
-![效果图](/assets/SoftRenderer的结果图.png)
-
 ## SpaceWar
 
-参加频道内举办的1MGames游戏开发大赛做的一款太空游戏：
+参加频道内举办的1MGames游戏开发大赛做的一款太空游戏，要求游戏本体大小1M内（不含VC运行时库）：
 
 <video src="/projects/spacewar.mov" width="100%" height="100%" controls="controls">
 </video>
