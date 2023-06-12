@@ -4,6 +4,24 @@
 
 <center><h2>Grogue现在可<a href=/projects/grogue-demo/grogue.html style="color:red">在线游玩！</a></br>目前处于Demo状态，每周日更新</h2></center>
 
+## 2023.6.11
+
+### 游戏内容更新
+
+无
+
+### 代码更新
+
+主要增加了自动化解析C++头文件，并且生成Lua绑定代码的工具：
+
+* 新增四个宏:
+    * `LUA_BIND`：绑定普通函数/类
+    * `LUA_BIND_RESOURCE`：绑定资源类
+    * `LUA_BIND_COMPONENT`：绑定组件类
+    * `LUA_NOBIND`：不做绑定，当使用以上三个宏时，对任意成员定义此宏将取消绑定
+* Parser工具：
+    * 使用python+`robotpy-cppheaderparser`分析C++头文件，并且自动生成绑定代码于`luabind/`下（完成）和自动生成Lua定义文件（进行中）
+
 ## 2023.6.8 重启Grogue
 
 [Grogue](https://github.com/VisualGMQ/grogue)是一个从2021年起开始编写的RogueLite游戏，大致经历了三个阶段：
