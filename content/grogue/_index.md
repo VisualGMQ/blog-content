@@ -4,6 +4,16 @@
 
 <center><h2>Grogue现在可<a href=/projects/grogue-demo/grogue.html style="color:red">在线游玩！</a></br>目前处于Demo状态，每周日更新</h2></center>
 
+## 2023.6.18
+
+### 游戏内容更新
+
+* 场地上的建筑物和人物有物理碰撞
+
+### 代码更新
+
+增加了一小部分的物理系统，让人物可以和建筑物之间进行碰撞
+
 ## 2023.6.11
 
 ### 游戏内容更新
