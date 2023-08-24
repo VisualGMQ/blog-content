@@ -8,7 +8,7 @@ category:
 - game development
 ---
 
-本文分析了开源项目[EnTT](https://github.com/skypjack/entt) v3.12.2的原理和实现。述说了ECS中的核心数据结构sparse set，以及在其上进行Entity支持的storage。
+本文分析了开源项目[EnTT](https://github.com/skypjack/entt) v3.12.2的原理和实现。述说了ECS中的核心数据结构sparse set。
 
 ## sparse set
 
