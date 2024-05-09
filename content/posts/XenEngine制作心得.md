@@ -10,9 +10,6 @@ tags:
 ![XenEngine](https://i.loli.net/2021/05/22/EHWuAsVUcMnYtxX.png)
 
 XenEngine是我的本科毕业设计，是一个基于OpenGL的游戏引擎，仓库在[这里](https://gitee.com/VisualGMQ/xen-engin.git)  
-
-我还为这个破引擎做了个视频：
-{% bilicard BV1U5411u7Tv %}
 这次就来说一说我制作这个引擎的心得
 
 <!-- more -->

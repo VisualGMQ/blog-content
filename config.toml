@@ -15,7 +15,7 @@ theme = "meme"
 newContentEditor = ""
 
 # i18n
-defaultContentLanguage = "es"
+defaultContentLanguage = "zh"
 defaultContentLanguageInSubdir = false
 
 # 是否复数化列表页面的标题
@@ -230,6 +230,12 @@ uglyURLs = false
         pre = "internal"
         post = "grogue"
     [[menu.main]]
+        pageref = "/NickelEngine/"
+        name = "NickelEngine"
+        weight = 7
+        pre = "internal"
+        post = "NickelEngine"
+    [[menu.main]]
         weight = 8
         identifier = "theme-switcher"
     [[menu.main]]
@@ -419,7 +425,7 @@ uglyURLs = false
     # 列表页面
 
     # 宽度
-    listWidth = 100
+    listWidth = 50
     # 说明：如果留空（""），则用 42 作为默认值
     #      单位：em
 
