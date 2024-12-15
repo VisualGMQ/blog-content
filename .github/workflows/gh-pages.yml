@@ -1,0 +1,36 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Set a branch to deploy
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.139.4' # 注意修改成你的hugo版本，以防兼容性错误
+          extended: true # 是否启用hugo extended
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          PERSONAL_TOKEN: ${{ secrets.BLOG_DEPLOY_TOKEN }}
+          EXTERNAL_REPOSITORY: VisualGMQ/VisualGMQ.github.io # 你的Github Pages远程仓库名
+          PUBLISH_DIR: ./public 
+          PUBLISH_BRANCH: main # 如果不想推送到gh-pages分支，可以添加这一行
