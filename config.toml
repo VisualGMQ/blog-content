@@ -224,17 +224,23 @@ uglyURLs = false
         pre = "internal"
         post = ""
     [[menu.main]]
-        pageref = "/grogue/"
-        name = "Grogue"
+        pageref = "/tl/"
+        name = "TreasureLooter"
         weight = 7
         pre = "internal"
-        post = "grogue"
-    [[menu.main]]
-        pageref = "/NickelEngine/"
-        name = "NickelEngine"
-        weight = 7
-        pre = "internal"
-        post = "NickelEngine"
+        post = ""
+    # [[menu.main]]
+    #     pageref = "/grogue/"
+    #     name = "Grogue"
+    #     weight = 7
+    #     pre = "internal"
+    #     post = "grogue"
+    # [[menu.main]]
+    #     pageref = "/NickelEngine/"
+    #     name = "NickelEngine"
+    #     weight = 7
+    #     pre = "internal"
+    #     post = "NickelEngine"
     [[menu.main]]
         weight = 8
         identifier = "theme-switcher"

@@ -1,6 +1,6 @@
 ---
 title: C++中的static_assert, assert和#error
-date: 2020-6-13 19:02:09
+date: 2020-06-13 19:02:09
 category:
 - language
 tags:

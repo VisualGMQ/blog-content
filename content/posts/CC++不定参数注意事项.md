@@ -1,6 +1,6 @@
 ---
 title: C/C++不定参数注意事项
-date: 2020-6-3 19:02:09
+date: 2020-06-03 19:02:09
 category:
 - language
 tags:

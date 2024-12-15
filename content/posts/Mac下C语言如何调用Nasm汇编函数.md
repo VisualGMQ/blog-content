@@ -1,6 +1,6 @@
 ---
 title: Mac下C语言如何调用Nasm汇编函数
-date: 2020-06-8 16:11:55
+date: 2020-06-08 16:11:55
 category:
 - language
 tags:

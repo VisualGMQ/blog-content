@@ -8,7 +8,7 @@ English |
 
 ## Description
 
-MemE is a powerful and highly customizable [GoHugo](https://github.com/gohugoio/hugo) theme for personal blogs. MemE focuses on elegance, simplicity, modernity, and code correctness. Also, I hope you would enjoy MemE like a meme and share MemE like a meme! Just like what your blog and articles do! 😝
+MemE is a powerful and highly customizable [GoHugo](https://github.com/gohugoio/hugo) theme for personal blogs, which focuses on elegance, simplicity, modernity, and best practices in coding.
 
 ## Preview
 
@@ -133,6 +133,7 @@ See [#2](https://github.com/reuixiy/hugo-theme-meme/issues/2).
   | aliases                                     | \*                                                                                                       | array                                                                        |
   | markup                                      | \*                                                                                                       | string                                                                       |
   | hideInHomepage                              | hide this post in homepage posts list                                                                    | boolean, valid for "posts" homepage with `enableHideInHomepage` enabled      |
+  | languageCode                                | add `lang` attribute with this value to `<article>`                                                      | string                                                                       |
   | meta                                        | set `false` to disable post-meta                                                                         | boolean, override `enablePostMeta` in `config.toml`                          |
   | displayPublishedDate                        | display published date in post-meta                                                                      | boolean, override `displayPublishedDate` in `config.toml`                    |
   | displayModifiedDate                         | display modified date in post-meta                                                                       | boolean, override `displayModifiedDate` in `config.toml`                     |
@@ -169,10 +170,11 @@ See [#2](https://github.com/reuixiy/hugo-theme-meme/issues/2).
   | motto                                       | author’s description                                                                                     | string                                                                       |
   | avatar                                      | author’s avatar                                                                                          | string, URL                                                                  |
   | twitter                                     | author’s twitter id                                                                                      | string                                                                       |
+  | fediverse                                   | author’s fediverse id                                                                                    | string                                                                       |
   | disqus_url                                  | \*                                                                                                       | string, if not set, will use `Permalink` as default                          |
   | disqus_identifier                           | \*                                                                                                       | string, if not set, will use `RelPermalink` as default                       |
   | disqus_title                                | \*                                                                                                       | string, if not set, will use `Title` as default                              |
 
-  \*: see https://gohugo.io/content-management/front-matter/  
+  \*: see https://gohugo.io/content-management/front-matter/
       and https://gohugo.io/templates/internal/#configure-disqus
 </details>

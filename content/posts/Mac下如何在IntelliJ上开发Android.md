@@ -1,6 +1,6 @@
 ---
 title: Mac下如何在IntelliJ上开发Android
-date: 2020-9-30 19:02:09
+date: 2020-09-30 19:02:09
 category:
 - 杂项
 ---

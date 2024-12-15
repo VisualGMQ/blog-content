@@ -1,6 +1,6 @@
 ---
 title: 使用纯SDL2库给OpenGL纹理
-date: 2019-10-7 10:59:39
+date: 2019-10-07 10:59:39
 category:
 - game development
 tags:

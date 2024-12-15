@@ -1,6 +1,6 @@
 ---
 title: CMake中使用PkgConfig
-date: 2020-10-2 10:58:54
+date: 2020-10-02 10:58:54
 category:
 - 构建工具
 tags:
