@@ -1,0 +1,1004 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>QuicksjCppBindingTutorual</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">QuicksjCppBindingTutorual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="介绍"><a class="header" href="#介绍">介绍</a></h1>
+<h2 id="什么是quickjs"><a class="header" href="#什么是quickjs">什么是QuickJS</a></h2>
+<blockquote>
+<p>QuickJS is a small and embeddable Javascript engine. It supports the <a href="https://tc39.github.io/ecma262/2023">ES2023</a> specification including modules, asynchronous generators, proxies and BigInt.</p>
+<p>Main Features:</p>
+<ul>
+<li>Small and easily embeddable: just a few C files, no external dependency, 367 KiB of x86 code for a simple <code>hello world</code> program.</li>
+<li>Fast interpreter with very low startup time: runs the 78000 tests of the <a href="https://github.com/tc39/test262">ECMAScript Test Suite</a> in about 2 minutes on a single core of a desktop PC. The complete life cycle of a runtime instance completes in less than 300 microseconds.</li>
+<li>Almost complete <a href="https://tc39.github.io/ecma262/2023">ES2023</a> support including modules, asynchronous generators and full Annex B support (legacy web compatibility).</li>
+<li>Passes nearly 100% of the ECMAScript Test Suite tests when selecting the ES2023 features (warning: the report available at <a href="https://test262.fyi/">test262.fyi</a> underestimates the QuickJS results because it does not use the right executable).</li>
+<li>Can compile Javascript sources to executables with no external dependency.</li>
+<li>Garbage collection using reference counting (to reduce memory usage and have deterministic behavior) with cycle removal.</li>
+<li>Command line interpreter with contextual colorization implemented in Javascript.</li>
+<li>Small built-in standard library with C library wrappers.</li>
+</ul>
+</blockquote>
+<p><a href="https://github.com/bellard/quickjs">QuickJS</a>是由大神Bellard制作的一款小巧，快速的JavaScript运行时。目标是用于嵌入各种程序中。</p>
+<h2 id="为何写这份教程"><a class="header" href="#为何写这份教程">为何写这份教程</a></h2>
+<p>QuickJS本身几乎没有任何的API文档。所有API基本上只能通过看例子进行学习。而且很多API还有很多坑。我在将QuickJS嵌入自己的游戏引擎的过程中遇到了很多坑，所以想做一份较为完善的教程。</p>
+<h2 id="本教程有没有的内容"><a class="header" href="#本教程有没有的内容">本教程有/没有的内容</a></h2>
+<p>本教程会介绍如何在C++代码中嵌入QuickJS，将C/C++的代码绑定给QuickJS并且在C++中调用js代码。</p>
+<p>本教程<strong>不会</strong>说如何从Js编译成独立可执行文件，并且调用C++链接库。本教程着眼于JS作为脚本语言嵌入，而非JS作为主语言的情况。</p>
+<h2 id="代码实例"><a class="header" href="#代码实例">代码实例</a></h2>
+<p>本教程附带一份<a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo">代码实例</a>，使用<a href="https://github.com/quickjs-ng/quickjs">QuickJS-NG</a>在C++20下编译。</p>
+<p>之所以在C++20下是因为在初始化时指定结构体成员的C相关语法只能在C++20下编译通过：</p>
+<pre><code class="language-cpp">struct Person {
+    float age;
+    float height;
+};
+
+int main() {
+    // can compile under C, but can't compile before C++20
+    Person p = {.age = 21.0f, .height = 190.0f};
+    return 0;
+}
+</code></pre>
+<h2 id="注意事项"><a class="header" href="#注意事项">注意事项</a></h2>
+<p>本教程的所有知识来源于<a href="https://github.com/quickjs-ng/quickjs">QuickJS-NG</a>而非Bellard的QuickJS。因为最初的QuickJS只能在Linux下编译，而QuickJS-NG做了跨平台处理。QuickJS-NG和最初的QuickJS API相差无几，本书的知识点应该可以同时用在两者之上。</p>
+<h2 id="作者不是个熟练的js使用者"><a class="header" href="#作者不是个熟练的js使用者">作者不是个熟练的JS使用者</a></h2>
+<p>我的工作是游戏引擎开发，并不是前后端开发，我也不太使用JavaScript，所以我并不十分了解JavaScript。如果本教程有疏漏还请指正（email: 2142587070@qq.com）</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="基础知识"><a class="header" href="#基础知识">基础知识</a></h1>
+<p>本章会介绍一些QuickJS基础知识。包括一个HelloWorld，使用QuickJS内部标准库，码执行方式和遇到异常时如何检查和处理。。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="helloworld"><a class="header" href="#helloworld">HelloWorld</a></h1>
+<p>本HelloWorld展示了执行一个JS文件。此JS文件会在屏幕上输出一行<code>Hello World</code>。</p>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/01-HelloWorld">Github代码链接</a></p>
+<h2 id="包含头文件"><a class="header" href="#包含头文件">包含头文件</a></h2>
+<p>首先要做的是包含QuickJS头文件：</p>
+<pre><code class="language-cpp">#include "quickjs.h"
+#include "quickjs-libc.h" // optional
+</code></pre>
+<p><code>quickjs.h</code>包含了所有需要的API，是最基础头文件。而<code>quickjs-libc.h</code>则是拥有很多实用工具的文件（可选）</p>
+<h2 id="创建runtime"><a class="header" href="#创建runtime">创建Runtime</a></h2>
+<p>首先创建JSRuntime：</p>
+<pre><code class="language-cpp">JSRuntime* runtime = JS_NewRuntime();
+if (!runtime) {
+    std::cerr &lt;&lt; "init runtime failed" &lt;&lt; std::endl;
+    return 1;
+}
+</code></pre>
+<p><code>JSRuntime</code>的官方文档解释是：</p>
+<blockquote>
+<p><code>JSRuntime</code> 表示与对象堆对应的 JavaScript 运行时。多个运行时可以同时存在，但它们不能交换对象。在给定的运行时中，不支持多线程。</p>
+</blockquote>
+<p><code>JSRuntime</code>是整个QuickJS环境的基础。</p>
+<h2 id="创建context"><a class="header" href="#创建context">创建Context</a></h2>
+<p>然后我们需要创建一个Context:</p>
+<pre><code class="language-cpp">JSContext* ctx = JS_NewContext(runtime);
+if (!ctx) {
+    std::cerr &lt;&lt; "create context failed" &lt;&lt; std::endl;
+    JS_FreeRuntime(runtime);
+    return 2;
+}
+</code></pre>
+<p><code>JSContext</code>的官方文档解释是：</p>
+<blockquote>
+<p><code>JSContext</code> 表示 JavaScript 上下文（或 Realm）。每个 JSContext 都有其自己的全局对象和系统对象。每个 JSRuntime 可以有多个 JSContext，并且它们可以共享对象，类似于在 Web 浏览器中共享 JavaScript 对象的同源框架。</p>
+</blockquote>
+<h2 id="初始化std帮助库"><a class="header" href="#初始化std帮助库">初始化std帮助库</a></h2>
+<p>QuickJS环境初始化之后，环境内除几乎没有任何可用的帮助对象（比如在JS中常见的<code>console.log</code>）。这个时候我们需要从<code>quickjs-libc.h</code>中的函数</p>
+<pre><code class="language-cpp">js_std_add_helpers(ctx, 0, NULL);
+</code></pre>
+<p>来给<code>JSContext</code>注册一些辅助对象。这些对象包含：</p>
+<ul>
+<li><code>console.log</code>(...args)：用于控制台输出（注：<strong>没有其他的console函数</strong>，他只注册了<code>log</code>函数）</li>
+<li><code>print(...args)</code>：也是用于控制台输出</li>
+<li><code>scriptArgs</code>：提供命令行参数。第一个参数是脚本名称</li>
+</ul>
+<p>我们会在JS脚本中使用<code>console.log</code>函数输出HelloWorld</p>
+<h2 id="读取js文件"><a class="header" href="#读取js文件">读取JS文件</a></h2>
+<p>我们的JS文件如下：</p>
+<pre><code class="language-javascript">// main.js
+console.log("Hello QuickJS!");
+</code></pre>
+<p>首先将文件读入内存：</p>
+<pre><code class="language-cpp">std::ifstream file("demos/01-HelloWorld/main.js",
+                   std::ios::in | std::ios::binary);
+if (!file) {
+    std::cerr &lt;&lt; "open file main.js failed" &lt;&lt; std::endl;
+}
+std::stringstream ss;
+ss &lt;&lt; file.rdbuf();
+std::string content = ss.str();
+</code></pre>
+<p>注意需要<strong>以二进制形式读取</strong></p>
+<p>然后使用<code>JS_Eval</code>函数执行：</p>
+<pre><code class="language-cpp">JSValue result = JS_Eval(ctx, content.c_str(), content.size(), nullptr, JS_EVAL_TYPE_GLOBAL);
+</code></pre>
+<p>参数分别是：</p>
+<ul>
+<li><code>JSContext</code>：你的JS上下文</li>
+<li><code>code</code>：代码</li>
+<li><code>code_len</code>：代码长度</li>
+<li><code>filename</code>：代码所在文件名。可以给空指针或者随便给一个，只是调试使用</li>
+<li><code>flags</code>：以何种方式执行。这里是全局执行，也是默认方式</li>
+</ul>
+<p>这个函数会执行整个脚本，并返回一个值。因为我们的脚本内没有返回任何值，所以这里的<code>result</code>是<code>JS_UNDEFINED</code>（即JS中的<code>undefine</code>）</p>
+<h2 id="错误处理"><a class="header" href="#错误处理">错误处理</a></h2>
+<p>有些时候脚本会执行出错（出现了语法错误,运行时错误或用户在JS代码中抛了异常等），这时<code>JS_Eval</code>会返回一个异常，可以进行处理：</p>
+<pre><code class="language-cpp">if (JS_IsException(result)) {
+    // from quickjs-libc.hpp, to log exception
+    js_std_dump_error(ctx);
+}
+</code></pre>
+<p>这里先判断返回值是否是异常。然后使用了<code>quickjs-libc</code>的辅助函数帮我们将异常信息输出到控制台上。</p>
+<h2 id="释放内存"><a class="header" href="#释放内存">释放内存</a></h2>
+<p>最后不要忘记释放内存：</p>
+<pre><code class="language-cpp">JS_FreeValue(ctx, result);
+JS_FreeContext(ctx);
+JS_FreeRuntime(runtime);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="异常处理"><a class="header" href="#异常处理">异常处理</a></h1>
+<p>本节介绍如何处理QuickJS异常。</p>
+<h2 id="何时发生异常"><a class="header" href="#何时发生异常">何时发生异常</a></h2>
+<ul>
+<li>返回<code>JSValue</code>的函数，使用<code>JS_IsException</code>判断是否是异常</li>
+<li>返回整数值的函数，如果小于0，则发生异常。</li>
+</ul>
+<h2 id="发生异常时得到异常"><a class="header" href="#发生异常时得到异常">发生异常时得到异常</a></h2>
+<p>典型的方式如下：</p>
+<pre><code class="language-cpp">void LogException(JSContext* ctx) {
+    JSValue exception_val = JS_GetException(ctx);
+    bool is_error = JS_IsError(ctx, exception_val);
+
+    // convert quickjs exception to string
+    const char* str = JS_ToCString(ctx, exception_val);
+    if (str) {
+        std::cerr &lt;&lt; str &lt;&lt; std::endl;
+        // don't forget to free
+        JS_FreeCString(ctx, str);
+    }
+
+    if (is_error) {
+        // get stack info
+        val = JS_GetPropertyStr(ctx, exception_val, "stack");
+        if (!JS_IsUndefined(val)) {
+            const char* stack_info = JS_ToCString(ctx, val);
+            std::cerr &lt;&lt; "stack: " &lt;&lt; stack_info &lt;&lt; std::endl;
+            JS_FreeCString(ctx, stack_info);
+        }
+        JS_FreeValue(ctx, val);
+    }
+
+    JS_FreeValue(ctx, exception_val);
+}
+</code></pre>
+<p>当有异常抛出时，异常会被记录在<code>JSContext</code>中。使用<code>JS_GetException</code>拿出，转换成字符串输出即可。如果有堆栈信息也可以一并输出。</p>
+<p>在有异常时即可调用：</p>
+<pre><code class="language-cpp">JSValue result = JS_Eval(ctx, content.c_str(), content.size(), nullptr,
+                         JS_EVAL_FLAG_STRICT | flags);
+
+if (JS_IsException(result)) {
+    LogException(ctx);
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="使用quickjs标准库"><a class="header" href="#使用quickjs标准库">使用QuickJS标准库</a></h1>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/02-UsingInternalModules">Github代码链接</a></p>
+<h2 id="使用quickjs标准库-1"><a class="header" href="#使用quickjs标准库-1">使用QuickJS标准库</a></h2>
+<p>QuickJS有自己的标准库（输入输出，文件操作，json操作等），详见<a href="https://quickjs-ng.github.io/quickjs/stdlib#scriptargs">QuickJS-NG文档</a>。但是要使用的话需要调用额外函数进行初始化。</p>
+<p>在<a href="./HelloWorld.html">HelloWorld</a>章节已经看到了如何注册<code>console.log</code>和其他全局变量/函数了。其他的函数则需要通过<code>js_init_module_xxx</code>进行初始化：</p>
+<pre><code class="language-cpp">js_init_module_os(ctx, "os");
+js_init_module_std(ctx, "std");
+js_init_module_bjson(ctx, "json");
+</code></pre>
+<p>第二个参数是库注册的名称。</p>
+<h2 id="js代码加载库"><a class="header" href="#js代码加载库">JS代码加载库</a></h2>
+<p>有至少三种方式：</p>
+<h3 id="使用模块模式执行代码"><a class="header" href="#使用模块模式执行代码">使用模块模式执行代码</a></h3>
+<p>如果想要在JS代码中使用</p>
+<pre><code class="language-js">import * as std from 'std'
+</code></pre>
+<p>这类代码，在执行代码时必须将其视为模块执行：</p>
+<pre><code class="language-cpp">JSValue result = JS_Eval(ctx, content.c_str(), content.size(), nullptr, 
+                         // use this flag!
+                         JS_EVAL_TYPE_MODULE);
+</code></pre>
+<p>否则会说没有<code>import</code>语法。</p>
+<p>作为模块执行的话有一个很严重的缺点：<strong>如果出现某些语法错误/运行时错误，QuickJS会直接静默而非抛出异常</strong>。这意味着调试困难。一般如果模块找不到的话他会正常报错。但是在你使用模块内部的对象（比如对一个不存在的类进行<code>new</code>），QuickJS则会abort，并且不会抛出异常（检查<code>JS_Eval</code>的返回值不会是异常）</p>
+<h3 id="使用异步加载方式加载"><a class="header" href="#使用异步加载方式加载">使用异步加载方式加载</a></h3>
+<p>这种方式可以不以模块方式加载：</p>
+<pre><code class="language-js">import('std').then(module =&gt; {
+    module.puts("I am std module in non-module mode\n");
+}).catch(err =&gt; {
+    print("Error loading module:", err);
+});
+</code></pre>
+<p>但这是一段异步代码。我们需要在执行完之后使用<code>js_std_loop</code>或<code>js_std_await</code>等待异步执行完毕：</p>
+<pre><code class="language-cpp">JSValue result = JS_Eval(ctx, content.c_str(), content.size(), nullptr, JS_EVAL_FLAG_GLOBAL);
+js_std_loop(ctx);
+</code></pre>
+<p><code>js_std_loop</code>会对整个<code>JSContext</code>中需要等待的脚本做等待。只指定某个脚本等待的话需调用<code>js_std_await</code></p>
+<h3 id="预加载模块然后执行"><a class="header" href="#预加载模块然后执行">预加载模块，然后执行</a></h3>
+<p>我们也可以走两步：</p>
+<ol>
+<li>先通过模块模式<code>import</code>需要的模块入<code>JSContext</code></li>
+<li>执行我们自己的代码。这样可以直接使用已经导入的模块</li>
+</ol>
+<p>这里首先以模块模式执行：</p>
+<pre><code class="language-cpp">std::cout &lt;&lt; "execute in pre-module mode" &lt;&lt; std::endl;
+const char* module_preload_code = R"(
+    import * as std from 'std';
+    globalThis.std = std;
+)";
+auto value =
+    JS_Eval(ctx, module_preload_code, strlen(module_preload_code), nullptr, JS_EVAL_TYPE_MODULE);
+</code></pre>
+<p>注意这里需要将模块放入<code>globalThis</code>中。</p>
+<p>然后执行我们自己的代码：</p>
+<pre><code class="language-js">std.puts("I am std module when preload module\n") // call function in std module
+</code></pre>
+<pre><code class="language-cpp">JSValue result = JS_Eval(ctx, content.c_str(), content.size(), nullptr, JS_EVAL_FLAG_GLOBAL);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="代码执行方式"><a class="header" href="#代码执行方式">代码执行方式</a></h1>
+<p>本节解释<code>JS_Eval</code>的最后一个参数<code>flag</code>的含义。以及如何使用编译后的JS二进制代码执行。</p>
+<p>二进制代码执行的例子在<a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/07-RunBytecode">这里</a></p>
+<h2 id="代码执行方式-1"><a class="header" href="#代码执行方式-1">代码执行方式</a></h2>
+<p>有两种Type：</p>
+<ul>
+<li><code>JS_EVAL_TYPE_GLOBAL</code>：全局模式执行（默认的），即所有代码都在全局模式下执行。某些代码中定义的对象可以在其他代码中使用</li>
+<li><code>JS_EVAL_TYPE_MODULE</code>：以模块模式执行。代码被视为模块（类似nodejs模块），并且可以使用模块导入语法<code>import * from 'Module'</code></li>
+</ul>
+<p>和四种Flag（可组合）：</p>
+<ul>
+<li><code>JS_EVAL_FLAG_STRICT</code>：以严格模式执行（相当于JS代码中写<code>use strict</code>，但QuickJS会忽略你写的，所以你只能通过指定此Flag来执行严格模式）</li>
+<li><code>JS_EVAL_FLAG_COMPILE_ONLY</code>：只是编译，不运行</li>
+<li><code>JS_EVAL_FALG_BACKTRACE_BARRIER</code>：不要在出错时的栈回溯中包含此代码执行之前的堆栈帧</li>
+<li><code>JS_EVAL_FLAG_ASYNC</code>：只能搭配<code>JS_EVAL_TYPE_GLOBAL</code>。代码以异步执行，<code>JS_Eval</code>返回一个Promise，需要等待。</li>
+</ul>
+<h2 id="以二进制方式执行代码"><a class="header" href="#以二进制方式执行代码">以二进制方式执行代码</a></h2>
+<p>QuickJS有个编译器<code>qjsc</code>可以将JS代码编译成二进制，这样减少了代码体积，在运行时速度也会更快。</p>
+<p>使用<code>qjsc</code>编译我们的代码：</p>
+<pre><code class="language-bash">qjsc -b -n "main.js" -o output.qjs main.js
+</code></pre>
+<ul>
+<li><code>-b</code>代表编译成二进制而不是C代码（没错可以编译成C代码，直接嵌入C文件中执行）</li>
+<li><code>-n</code>指定编译之后的脚本名称（用于调试，在抛出异常时包含在stack traces中）</li>
+<li><code>-o</code>指定编译的结果文件</li>
+</ul>
+<p>最后的参数是要编译的代码文件。</p>
+<p>然后在C++代码中执行：</p>
+<pre><code class="language-C++">JSValue obj = JS_ReadObject(ctx, (uint8_t*)content.data(), content.size(), JS_READ_OBJ_BYTECODE);
+JSValue result = JS_EvalFunction(ctx, obj);
+</code></pre>
+<p>首先使用<code>JS_ReadObject</code>从二进制代码中读取<code>JSValue</code>，然后使用<code>JS_EvalFunction</code>执行。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="让我们开始绑定"><a class="header" href="#让我们开始绑定">让我们开始绑定</a></h1>
+<p>从这一节开始进行C++代码绑定到QuickJS。我们先介绍如何绑定普通的全局变量和函数。然后介绍如何绑定类。最后介绍如何绑定一个模块到QuickJS</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="绑定全局变量"><a class="header" href="#绑定全局变量">绑定全局变量</a></h1>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/03-BindingGlobalFields">Github代码</a></p>
+<p>我们首先从最简单的全局变量绑定开始。</p>
+<h2 id="quickjs的类型"><a class="header" href="#quickjs的类型">QuickJS的类型</a></h2>
+<p>QuickJS中使用<code>JSValue</code>包装所有C/C++类型。支持的类型如下：</p>
+<ul>
+<li>Number：数字类型</li>
+<li>String：字符串类型（是C风格字符串不是<code>std::string</code>）</li>
+<li>Boolean：布尔值</li>
+<li>Class：类</li>
+<li>Module：模块</li>
+<li>Exception：异常</li>
+<li>Function：函数</li>
+<li>Array：数组</li>
+</ul>
+<h2 id="例子"><a class="header" href="#例子">例子</a></h2>
+<p>现在希望绑定一个数值类型的变量：</p>
+<pre><code class="language-cpp">int gGlobalVar = 123;
+</code></pre>
+<p>做法如下：</p>
+<pre><code class="language-cpp">void Bind(JSContext* ctx) {
+    // Int32 value is directly copied into JSValue(no malloc), so we don't need JS_FreeValue it
+    JSValue new_obj = JS_NewInt32(ctx, gGlobalVar);
+    if (JS_IsException(new_obj)) {
+        js_std_dump_error(ctx);
+        JS_FreeValue(ctx, new_obj);
+        return;
+    }
+
+    JSValue global_this = JS_GetGlobalObject(ctx);
+
+    // JS_WRITABLE | JS_ENUMERABLE | JS_CONFIGURABLE by default
+    JS_SetPropertyStr(ctx, global_this, "global_var", new_obj);
+
+    // don't forget cleanup
+    JS_FreeValue(ctx, global_this);
+}
+</code></pre>
+<p>C++和JS的所有数据交换都是通过<code>JSValue</code>进行的。这里步骤如下：</p>
+<ol>
+<li>首先使用<code>JS_NewInt32</code>创建一个整数类型的<code>JSValue</code></li>
+<li>做异常检查</li>
+<li>得到全局对象<code>JS_GetGlobalObject</code></li>
+<li>使用<code>JS_SetPropertyStr</code>将我们的变量注册到全局对象中</li>
+<li>清理内存</li>
+</ol>
+<p>重点是注册的函数<code>JS_SetPropertyStr</code>。其原型如下：</p>
+<pre><code class="language-cpp">int JS_SetPropertyStr(JSContext *ctx, JSValueConst this_obj, const char *prop, JSValue val)
+</code></pre>
+<ul>
+<li><code>this_object</code>：要注册到的对象</li>
+<li><code>prop</code>：要注册的对象名称（在JS中使用的名称）</li>
+<li><code>val</code>：要注册的对象</li>
+</ul>
+<p>注册完之后就可以在JS中使用了：</p>
+<pre><code class="language-js">console.log("global_var: ", global_var)
+</code></pre>
+<h2 id="绑定基础类型变量的规则"><a class="header" href="#绑定基础类型变量的规则">绑定基础类型变量的规则</a></h2>
+<p>绑定对象的步骤如下：</p>
+<ol>
+<li>使用<code>JS_NewXXX</code>来创建一个JS对象</li>
+<li>使用<code>JS_SetPropertyStr</code>来将对象绑定在另一个JS对象中</li>
+<li>清理内存</li>
+</ol>
+<h3 id="可创建的js对象"><a class="header" href="#可创建的js对象">可创建的JS对象</a></h3>
+<ul>
+<li>通用的数值类创建使用<code>JS_NewNumber</code>。细分如下：
+<ul>
+<li><code>JS_NewInt32</code>：创建32位的整数</li>
+<li><code>JS_NewInt64</code>：创建64位整数（底层规则是：如果是32位，调用<code>JS_NewInt32</code>，否则直接调用<code>JS_NewFloat64</code>存在64位浮点数中）</li>
+<li><code>JS_NewUint32</code>：创建无符号32位整数（规则通<code>JS_NewInt64</code>）</li>
+<li><code>JS_NewFloat64</code>：创建double类型（JS中没有float类型都是double）</li>
+</ul>
+</li>
+<li>大数类型：
+<ul>
+<li><code>JS_NewBigInt64</code></li>
+<li><code>JS_NewBigUInt64</code></li>
+</ul>
+</li>
+<li><code>JS_NewBool</code>：创建布尔值</li>
+<li><code>JS_NewClass</code>：创建类</li>
+<li><code>JS_NewObject</code>：创建对象</li>
+<li>字符串类：
+<ul>
+<li><code>JS_NewString</code></li>
+<li><code>JS_NewStringLen</code>：可指定字符串长度</li>
+</ul>
+</li>
+</ul>
+<h2 id="何时释放jsvalue"><a class="header" href="#何时释放jsvalue">何时释放JSValue？</a></h2>
+<p><code>JSValue</code>的释放也是有讲究的。其底层实现为：</p>
+<pre><code class="language-cpp">void JS_FreeValueRT(JSRuntime *rt, JSValue v)
+{
+    if (JS_VALUE_HAS_REF_COUNT(v)) {
+        JSRefCountHeader *p = (JSRefCountHeader *)JS_VALUE_GET_PTR(v);
+        if (--p-&gt;ref_count &lt;= 0) {
+            js_free_value_rt(rt, v);
+        }
+    }
+}
+</code></pre>
+<p>是先判断是否有引用计数，如果有的话，当计数降为0释放内存。</p>
+<p>有引用计数的一般是类和对象类型。像基础的数值类型是直接值拷贝入<code>JSValue</code>的，也不会有内存分配/释放：</p>
+<pre><code class="language-cpp">// JSValue impl
+typedef union JSValueUnion {
+    int32_t int32;
+    double float64;
+    void *ptr;
+    int32_t short_big_int;
+} JSValueUnion;
+
+typedef struct JSValue {
+    JSValueUnion u;
+    int64_t tag;
+} JSValue;
+</code></pre>
+<ul>
+<li><code>tag</code>：即<code>JS_TAG_XXX</code>类型，标识<code>JSValue</code>的类型</li>
+<li><code>u</code>：如果是数值类型，就记录在非<code>ptr</code>中并且没有内存分配。否则进行内存分配，将指针记录在<code>ptr</code>中</li>
+</ul>
+<p>而<code>JS_VALUE_HAS_REF_COUNT</code>也让我们知道哪些是会进行内存分配的：</p>
+<pre><code class="language-cpp">#define JS_VALUE_HAS_REF_COUNT(v) ((unsigned)JS_VALUE_GET_TAG(v) &gt;= (unsigned)JS_TAG_FIRST)
+
+enum {
+    // has memory allocation
+    JS_TAG_FIRST       = -9, /* first negative tag */
+    JS_TAG_BIG_INT     = -9,
+    JS_TAG_SYMBOL      = -8,
+    JS_TAG_STRING      = -7,
+    JS_TAG_MODULE      = -3, /* used internally */
+    JS_TAG_FUNCTION_BYTECODE = -2, /* used internally */
+    JS_TAG_OBJECT      = -1,
+
+    // no memory allocation 
+    JS_TAG_INT         = 0,
+    JS_TAG_BOOL        = 1,
+    JS_TAG_NULL        = 2,
+    JS_TAG_UNDEFINED   = 3,
+    JS_TAG_UNINITIALIZED = 4,
+    JS_TAG_CATCH_OFFSET = 5,
+    JS_TAG_EXCEPTION   = 6,
+    JS_TAG_SHORT_BIG_INT = 7,
+    JS_TAG_FLOAT64     = 8,
+};
+</code></pre>
+<p>那么所有时候，只要使用了<code>JS_NewXXX</code>就一定要调用<code>JS_FreeValue</code>吗？答案是否定的。具体是否需要释放要看之后的函数是否影响了其引用计数。比如上面HelloWorld中的代码我们就没有释放<code>new_obj</code>。因为<code>new_obj</code>被创建出来时引用计数是1。而<code>JS_SetPropertyStr</code>传入<code>new_obj</code>后是不会改变其引用计数的。这个时候如果调用了<code>JS_FreeValue</code>则会将<code>new_obj</code>的引用计数降为0，进而释放内存。但此时其已被注册在<code>global_this</code>中了。在<code>JSRuntime</code>释放的时候会尝试释放所有被引用的节点，这个时候会再次释放<code>new_obj</code>造成程序崩溃。</p>
+<p>所以是否要释放<code>JSValue</code>，关键在于之后使用的函数是否增加了<code>JSValue</code>的引用计数。如果增加了就需要释放。</p>
+<p>或者说的更严谨一点，当其他函数内部使用了<code>js_dup()</code>时就是增加了引用计数，这个时候我们就得手动释放。</p>
+<h2 id="绑定类对象"><a class="header" href="#绑定类对象">绑定类对象</a></h2>
+<p>如果想要绑定类对象，需要使用<code>JS_NewClassObject</code>并且将类对象设置进去：</p>
+<pre><code class="language-cpp">Person* p = new Person{}; // C++ class object
+JSValue result = JS_NewObjectClass(ctx, class_id);
+JS_SetOpaque(result, person);
+JS_SetPropertyStr(ctx, global_this, "person", result);
+</code></pre>
+<p>这里需要一个<code>class_id</code>，<code>class_id</code>是类的唯一标识，在你注册类的时候会生成一个（等待后面绑定类的时候会说到）。</p>
+<p>然后使用<code>JS_SetOpaque</code>函数将我们的类对象塞给<code>JSValue</code>即可。</p>
+<h2 id="绑定空对象"><a class="header" href="#绑定空对象">绑定空对象</a></h2>
+<p>使用<code>JS_NewObject</code>创建一个空对象（即创建一个JS中的<code>Object</code>实例）。这个对象不和任何类相关联，所以也不需要一个<code>class_id</code>。</p>
+<h2 id="内置jsvalue常量"><a class="header" href="#内置jsvalue常量">内置JSValue常量</a></h2>
+<ul>
+<li><code>JS_UNDEFINED</code></li>
+<li><code>JS_NULL</code></li>
+</ul>
+<p>这两个是内置的字面常量，可以直接使用无需<code>JS_NewXXX</code>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="绑定全局函数"><a class="header" href="#绑定全局函数">绑定全局函数</a></h1>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/04-BindingGlobalFunctions">Github代码</a></p>
+<p>本节介绍了如何绑定全局函数</p>
+<h2 id="例子-1"><a class="header" href="#例子-1">例子</a></h2>
+<p>假设我们有一个简单的<code>Add</code>函数：</p>
+<pre><code class="language-cpp">int Add(int a, int b) {
+    return a + b; 
+}
+</code></pre>
+<p>我们和绑定变量一样绑定他到全局对象。只是使用<code>JS_NewCFunction</code>创建<code>JSValue</code>：</p>
+<pre><code class="language-cpp">JSValue global_this = JS_GetGlobalObject(ctx);
+
+constexpr int FnParamCount = 2;
+JSValue fn = JS_NewCFunction(ctx, AddFnBinding, "Add", FnParamCount);
+
+JS_SetPropertyStr(ctx, global_this, "Add", fn);
+
+JS_FreeValue(ctx, global_this);
+</code></pre>
+<p>注意<code>JS_NewCFunction</code>的第二个参数<code>AddFnBinding</code>。他的类型是<code>JSCFunction</code>，一个函数指针：</p>
+<pre><code class="language-cpp">typedef JSValue JSCFunction(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv);
+</code></pre>
+<p>QuickJS在看到JS调用C++函数时其实会调用我们给的这个函数指针。我们需要实现此函数指针并且在内部调用我们自己的C++函数：</p>
+<pre><code class="language-cpp">JSValue AddFnBinding(JSContext* ctx, JSValue self, int argc,
+                     JSValueConst* argv) {
+    if (argc != 2) {
+        return JS_ThrowPlainError(ctx, "Add function must has two parameters");
+    }
+
+    JSValueConst param1 = argv[0];
+    JSValueConst param2 = argv[1];
+    if (!JS_IsNumber(param1) || !JS_IsNumber(param2)) {
+        return JS_ThrowTypeError(ctx, "Add accept two integral");
+    }
+
+    int32_t value1, value2;
+    JS_ToInt32(ctx, &amp;value1, param1);
+    JS_ToInt32(ctx, &amp;value2, param2);
+
+    return JS_NewInt32(ctx, Add(value1, value2));
+}
+</code></pre>
+<p>参数解释：</p>
+<ul>
+<li>
+<p><code>ctx</code>：JS上下文</p>
+</li>
+<li>
+<p><code>self</code>：如果函数是类对象函数，那这里会传入类对象。否则是<code>JS_UNDEFINED</code></p>
+</li>
+<li>
+<p><code>argc</code>：传给函数的参数格式</p>
+</li>
+<li>
+<p><code>argv</code>：传给函数的参数。注意这里写的虽是<code>JSValueConst</code>但并不代表他们是常量。因为底层定义如下：</p>
+<pre><code class="language-cpp">#define JSValueConst JSValue
+</code></pre>
+</li>
+</ul>
+<p>这里首先检查参数个数和参数类型是否是我们想要的，然后将两个参数使用<code>JS_ToXXX</code>转换成C++类型，然后调用我们的<code>Add</code>函数并将结果穿给<code>JSValue</code>。</p>
+<h2 id="更多函数类型"><a class="header" href="#更多函数类型">更多函数类型</a></h2>
+<p>QuickJS内置了很多函数类型。<code>JSCFunction</code>只是最通用和最常见的类型。还有如下类型（定义在<code>JSCFunctionEnum</code>）：</p>
+<ul>
+<li><code>JS_CFUNC_generic</code>：最通用的函数类型（就是我们使用的<code>JSCFunction</code>）</li>
+<li><code>JS_CFUNC_constructor</code>：类的构造函数</li>
+<li>专门给数学函数定义的类型：
+<ul>
+<li><code>JS_CFUNC_f_f</code>：形如<code>double(*)(double)</code>的函数指针</li>
+</ul>
+</li>
+<li><code>JS_CFUNC_f_f_f</code>：形如<code>double(*)(double, double)</code>的函数指针</li>
+<li><code>JS_CFUNC_getter</code>和<code>JS_CFUNC_setter</code>：getter和setter</li>
+<li><code>JS_CFUNC_iterator_next</code>：用于迭代器的类型</li>
+<li><code>JS_CFUNC_constructor_or_func</code>：&lt;不清楚是什么，以后研究&gt;</li>
+<li>以及某些函数的magic版本（在类型后面加<code>_magic</code>例如<code>JS_CFUNC_generic_magic</code>）</li>
+</ul>
+<p>这些函数的签名可以在<code>JSCFunctionType</code>看到：</p>
+<pre><code class="language-cpp">typedef union JSCFunctionType {
+    JSCFunction *generic;
+    JSValue (*generic_magic)(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv, int magic);
+    JSCFunction *constructor;
+    JSValue (*constructor_magic)(JSContext *ctx, JSValueConst new_target, int argc, JSValueConst *argv, int magic);
+    JSCFunction *constructor_or_func;
+    double (*f_f)(double);
+    double (*f_f_f)(double, double);
+    JSValue (*getter)(JSContext *ctx, JSValueConst this_val);
+    JSValue (*setter)(JSContext *ctx, JSValueConst this_val, JSValueConst val);
+    JSValue (*getter_magic)(JSContext *ctx, JSValueConst this_val, int magic);
+    JSValue (*setter_magic)(JSContext *ctx, JSValueConst this_val, JSValueConst val, int magic);
+    JSValue (*iterator_next)(JSContext *ctx, JSValueConst this_val,
+                             int argc, JSValueConst *argv, int *pdone, int magic);
+} JSCFunctionType;
+</code></pre>
+<h3 id="数学函数类型"><a class="header" href="#数学函数类型">数学函数类型</a></h3>
+<p><code>JS_CFUNC_f_f</code>和<code>JS_CFUNC_f_f_f</code>。</p>
+<p>这两个函数都是接收<code>double</code>作为参数（<code>f_f</code>接收一个，<code>f_f_f</code>接收两个），返回一个<code>double</code>值。一般用于绑定<code>sin</code>,<code>cos</code>这种数学函数。优点是函数签名不含<code>JSValue</code>直接是<code>double</code>，不需要做额外的转换。</p>
+<h3 id="getter和setter"><a class="header" href="#getter和setter">getter和setter</a></h3>
+<p>用于变量的Getter和Setter。可以使用这种方式实现只读变量（只实现getter不实现setter)。函数签名分别是：</p>
+<ul>
+<li><code>Getter</code>: <code>JSValue (*getter)(JSContext *ctx, JSValueConst this_val)</code>。传入要获得值的对象</li>
+<li><code>Setter</code>:<code>JSValue (*setter)(JSContext *ctx, JSValueConst this_val, JSValueConst val)</code>。传入值的来源<code>val</code>和放入值的变量<code>this_val</code></li>
+</ul>
+<h3 id="迭代器类型"><a class="header" href="#迭代器类型">迭代器类型</a></h3>
+<p>&lt;暂时没研究，之后补上&gt;</p>
+<h3 id="带有magic的类型"><a class="header" href="#带有magic的类型">带有magic的类型</a></h3>
+<p>几乎所有类型的函数都有magic版本。magic版本的作用是通过额外的参数<code>int magic</code>来将多个函数聚合在一起：</p>
+<pre><code class="language-cpp">// binding function
+JSValue BindMagicFn(JSContext* ctx, JSValue, int argc, JSValueConst* argv, int magic) {
+    if (magic == 0) {
+        MagicFn1();
+    } else if (magic == 1) {
+        MagicFn2();
+    }
+
+    return JS_UNDEFINED;
+}
+
+// bind
+JSValue fn1 = JS_NewCFunctionMagic(ctx, BindMagicFn, "MagicFn1", FnParamCount, JS_CFUNC_generic_magic, 0);
+JSValue fn2 = JS_NewCFunctionMagic(ctx, BindMagicFn, "MagicFn2", FnParamCount, JS_CFUNC_generic_magic, 1);
+</code></pre>
+<p>使用<code>JS_NewCFunctionMagic</code>来绑定magic函数。通过最后的参数来区分内部到底是在使用哪个函数。</p>
+<h2 id="如何绑定这些花里胡哨的函数类型"><a class="header" href="#如何绑定这些花里胡哨的函数类型">如何绑定这些花里胡哨的函数类型</a></h2>
+<p>虽然函数类型和签名很多，但是<code>JS_SetPropertyStr</code>的第二个参数只接收<code>JSCFunction</code>类型。要如何绑定呢？有两种方法：</p>
+<ol>
+<li>
+<p>使用特定的绑定函数，比如magic相关的就是<code>JS_NewCFunctionMagic</code>，getter/setter就是<code>    JS_DefinePropertyGetSet()</code></p>
+</li>
+<li>
+<p>使用<code>JSCFunctionType</code>进行转换：</p>
+<pre><code class="language-cpp">JSCFunctionType fn_type;
+// JS_CFUNC_f_f_f pass two double elem and return one double elem
+fn_type.f_f_f = +[](double param1, double param2) -&gt; double { return param1 + param2; };
+JSValue fn = JS_NewCFunction2(ctx, fn_type.generic, "Sum", 1, JS_CFUNC_f_f_f, 0);
+</code></pre>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="绑定类"><a class="header" href="#绑定类">绑定类</a></h1>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/05-BindingClass">Github代码</a></p>
+<h2 id="js中的原型对象prototype"><a class="header" href="#js中的原型对象prototype">JS中的原型对象(prototype)</a></h2>
+<p>我们需要先理解JS中的原型对象。因为C++这边的绑定和JS的原理是一致的。</p>
+<p>JS类的一个典型古典定义如下：</p>
+<pre><code class="language-js">function Person(name) {
+    this.name = name;
+}
+
+Person.prototype.sayHello = function() {
+    console.log("Hello, my name is " + this.name);
+};
+
+let alice = new Person("Alice");
+alice.sayHello();
+</code></pre>
+<p>类本身是一个函数<code>Person</code>。而其成员函数都是绑定在函数的原型<code>prototype</code>中。当实例化的时候，会调用<code>Person</code>函数初始化成员变量，并且拷贝<code>prototype</code>到对象中以找到成员函数。</p>
+<p>JavaScript ES6中引入了更现代化的<code>class</code>定义。但本质上是语法糖，会被转换到原型对象这一套语法。</p>
+<h2 id="c绑定类的例子"><a class="header" href="#c绑定类的例子">C++绑定类的例子</a></h2>
+<p>假设我们有个Person类：</p>
+<pre><code class="language-cpp">struct Person {
+    static int ID;
+    
+    char name[512] = {0};
+    float height;
+    float weight;
+    int age;
+
+    Person(const std::string&amp; name, float height, int age, float weight)
+        : height{height}, age{age}, weight{weight} {
+        ChangeName(name);
+    }
+
+    void Introduce() const {
+        std::cout &lt;&lt; "I am " &lt;&lt; name &lt;&lt; ", age " &lt;&lt; age &lt;&lt; ", height " &lt;&lt; height
+                  &lt;&lt; ", weight " &lt;&lt; weight &lt;&lt; std::endl;
+    }
+
+    float GetBMI() const { return weight / (height * height); }
+
+    void ChangeName(const std::string&amp; name) {
+        strcpy(this-&gt;name, name.data());
+    }
+};
+</code></pre>
+<p>绑定的过程如下：</p>
+<p>首先，需要创建一份<code>JSClassID</code>。QuickJS内部用<code>JSClassID</code>唯一标识一个类：</p>
+<pre><code class="language-cpp">gClassID = JS_NewClassID(runtime, &amp;gClassID);
+if (gClassID == 0) {
+    std::cerr &lt;&lt; "create class id failed" &lt;&lt; std::endl;
+}
+</code></pre>
+<p>然后需要一个类定义对象<code>JSClassDef</code>：</p>
+<pre><code class="language-cpp">JSClassDef def{};
+// will call when value be freed
+def.finalizer = +[](JSRuntime*, JSValue self) {
+    if (!JS_IsObject(self)) {
+        std::cerr &lt;&lt; "in finalizer, self is not object" &lt;&lt; std::endl;
+    }
+
+    Person* opaque = static_cast&lt;Person*&gt;(JS_GetOpaque(self, gClassID));
+    if (!opaque) {
+        std::cerr &lt;&lt; "self is nullptr" &lt;&lt; std::endl;
+    }
+
+    delete opaque;
+};
+def.class_name = class_name;
+</code></pre>
+<p><code>def.finalizer</code>是类的析构函数。当<code>JSValue</code>被GC掉的时候会调用。我们需要在这里清理内存。</p>
+<p><code>def.class_name</code>则是类名。</p>
+<p>接下来需要将这个类定义注册到<code>JSRuntime</code>中：</p>
+<pre><code class="language-cpp">JS_NewClass(runtime, gClassID, &amp;def);
+</code></pre>
+<p>然后我们需要根据原型对象的原理组建一个原型对象：</p>
+<pre><code class="language-cpp">JSValue proto = JS_NewObject(ctx);
+</code></pre>
+<p>接下来需要为成员变量/函数创建对应的<code>JSValue</code>。注意这里成员变量和函数在C++中都是函数（成员变量由getter/setter表示）。比如说getter/setter：</p>
+<pre><code class="language-cpp">JSValue NameGetter(JSContext* ctx, JSValue self) {
+    // I'm lazy to check type :-)
+    const Person* p = static_cast&lt;const Person*&gt;(JS_GetOpaque(self, gClassID));
+    return JS_NewString(ctx, p-&gt;name);
+}
+
+JSValue NameSetter(JSContext* ctx, JSValue self, JSValueConst param) {
+    // I'm lazy to check type :-)
+    Person* p = static_cast&lt;Person*&gt;(JS_GetOpaque(self, gClassID));
+    p-&gt;ChangeName(JS_ToCString(ctx, param));
+    return JS_UNDEFINED;
+}
+</code></pre>
+<p>使用<code>JS_GetOpaque</code>从<code>JSValue</code>中拿到特定类的指针（注意<code>gClassID</code>一定要对得上。如果class id是无效的会返回空指针，这也就意味着你必须先注册对应的类）。</p>
+<p>然后绑定给prototype：</p>
+<pre><code class="language-cpp">JSAtom name = JS_NewAtom(ctx, "name");
+JS_DefinePropertyGetSet(ctx, proto, NameGetterJSValue, NameSetterJSValue, nameAtom, 0);
+JS_FreeAtom(ctx, atom);
+</code></pre>
+<p>其他成员函数同理。</p>
+<p>然后定义构造函数：</p>
+<pre><code class="language-cpp">JSValue ConstructorBinding(JSContext* ctx, JSValue self, int argc,
+                           JSValueConst* argv) {
+    // I'm lazy to check argv type :-)
+    const char* name = JS_ToCString(ctx, argv[0]);
+    double height;
+    JS_ToFloat64(ctx, &amp;height, argv[1]);
+    int age;
+    JS_ToInt32(ctx, &amp;age, argv[2]);
+    double weight;
+    JS_ToFloat64(ctx, &amp;weight, argv[3]);
+
+    Person* person = new Person(name, height, age, weight);
+    JSValue result = JS_NewObjectClass(ctx, gClassID);
+    JS_SetOpaque(result, person);
+    return result;
+}
+</code></pre>
+<p>注意创建类对象的方法：</p>
+<ol>
+<li>使用<code>JS_NewObjectClass</code>创建类对象</li>
+<li>使用<code>JS_SetOpaque</code>将C++对象传给JS</li>
+</ol>
+<p>然后，告诉QuickJS我们需要将此prototype和哪个类相关联：</p>
+<pre><code class="language-cpp">JS_SetClassProto(ctx, gClassID, proto);
+</code></pre>
+<p>最后将构造函数注册给<code>global_this</code>，我们就可以在JS中使用此类啦：</p>
+<pre><code class="language-cpp">JSValue global_var = JS_GetGlobalObject(ctx);
+JS_DefinePropertyValueStr(ctx, global_var, "Person", constructor, JS_CFUNC_constructor);
+JS_FreeValue(ctx, global_var);
+</code></pre>
+<p>在JS中使用：</p>
+<pre><code class="language-js">let person = new Person("QJSKid", 150, 15, 40)
+console.log(person.name) 
+person.name = "John"
+console.log(person.name)
+console.log(person.bmi)
+person.introduce()
+</code></pre>
+<h2 id="如何绑定类静态函数成员"><a class="header" href="#如何绑定类静态函数成员">如何绑定类静态函数/成员？</a></h2>
+<p>静态函数和成员直接绑定在构造函数上即可，无需绑定在prototype上：</p>
+<pre><code class="language-cpp">JSValue id_value = JS_NewInt32(ctx, Person::ID);
+JS_SetPropertyStr(ctx, constructor, "ID", id_value);
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-js">console.log(Person.ID)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="更多设置对象属性的方法"><a class="header" href="#更多设置对象属性的方法">更多设置对象属性的方法</a></h1>
+<p>在之前的绑定中，我们基本上是使用<code>JS_SetPrototypeStr</code>进行代码绑定。但还有其他的方法。</p>
+<h2 id="js_setproperty系列"><a class="header" href="#js_setproperty系列">JS_SetProperty系列</a></h2>
+<p><code>JS_SetPrototype</code>系列有如下函数：</p>
+<pre><code class="language-cpp">int JS_SetPropertyStr(JSContext *ctx, JSValueConst this_obj, const char *prop, JSValue val)
+</code></pre>
+<ul>
+<li><code>this_obj</code>：要设置到的值</li>
+<li><code>prop</code>：设置的成员名称</li>
+<li><code>val</code>：要设置的值</li>
+</ul>
+<pre><code class="language-cpp">int JS_SetProperty(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValue val)
+</code></pre>
+<p>与<code>JS_SetPropertyStr</code>的区别是第三个参数是<code>JSAtom</code>。这其实是更底层的函数。<code>JSAtom</code>就是一个字符串。只是如果你用<code>JS_NewAtom</code>创建之后你可以复用他，这样QuickJS就不用将字符串字面量在底层到处拷贝（比如使用<code>JS_SetPropertyStr</code>时）</p>
+<h2 id="js_defineproperty系列"><a class="header" href="#js_defineproperty系列">JS_DefineProperty系列</a></h2>
+<p>这个系列函数给了你更加精细的控制：</p>
+<pre><code class="language-cpp">int JS_DefineProperty(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValueConst val, JSValueConst getter, JSValueConst setter, int flags)
+int JS_DefinePropertyValue(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValue val, int flags)
+int JS_DefinePropertyValueStr(JSContext *ctx, JSValueConst this_obj, const char *prop, JSValue val, int flags)
+int JS_DefinePropertyGetSet(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValue getter, JSValue setter, int flags)
+</code></pre>
+<p>同样的，有带有<code>JSAtom</code>和直接使用字符串的。但都多出了<code>int flags</code>这个参数。取值如下：</p>
+<pre><code class="language-cpp">#define JS_PROP_CONFIGURABLE  (1 &lt;&lt; 0)
+#define JS_PROP_WRITABLE      (1 &lt;&lt; 1)
+#define JS_PROP_ENUMERABLE    (1 &lt;&lt; 2)
+#define JS_PROP_C_W_E         (JS_PROP_CONFIGURABLE | JS_PROP_WRITABLE | JS_PROP_ENUMERABLE)
+#define JS_PROP_LENGTH        (1 &lt;&lt; 3) /* used internally in Arrays */
+#define JS_PROP_TMASK         (3 &lt;&lt; 4) /* mask for NORMAL, GETSET, VARREF, AUTOINIT */
+#define JS_PROP_NORMAL         (0 &lt;&lt; 4)
+#define JS_PROP_GETSET         (1 &lt;&lt; 4)
+#define JS_PROP_VARREF         (2 &lt;&lt; 4) /* used internally */
+#define JS_PROP_AUTOINIT       (3 &lt;&lt; 4) /* used internally */
+/* throw an exception if false would be returned
+   (JS_DefineProperty/JS_SetProperty) */
+#define JS_PROP_THROW            (1 &lt;&lt; 14)
+/* throw an exception if false would be returned in strict mode
+   (JS_SetProperty) */
+#define JS_PROP_THROW_STRICT     (1 &lt;&lt; 15)
+</code></pre>
+<ul>
+<li><code>JS_PROP_NORMAL</code>：默认值，无任何属性</li>
+<li><code>JS_PROP_ENUMERABLE</code>：属性可被枚举（可被<code>for...in</code>遍历到）</li>
+<li><code>JS_PROP_WRITABLE</code>：可写入</li>
+<li><code>JS_PROP_CONFIGURABLE</code>：属性的配置可被修改。如果第一次使用<code>JS_DefinePropertyXXX</code>未指定这个值，那之后使用<code>JS_DefinePropertyXXX</code>不允许修改属性的PROP。</li>
+<li><code>JS_PROP_C_W_E</code>：<code>JS_PROP_CONFIGURABLE</code>,<code>JS_PROP_WRITABLE</code>,<code>JS_PROP_ENUMERABLE</code>的组合</li>
+<li><code>JS_PROP_GETSET</code>：标识属性是getter/setter（一般和<code>JS_DefineProperty</code>配合使用）。<strong>注意：</strong>
+<ol>
+<li>使用这个枚举的时候还需要配合<code>JS_PROP_HAS_GET</code>,<code>JS_PROP_HAS_SET</code>来告诉QuickJS是否有getter/setter</li>
+<li>传入的getter/setter相关<code>JSValue</code><strong>需要被<code>JS_FreeValue</code></strong>，因为底层调用了<code>js_dup</code></li>
+</ol>
+</li>
+<li><code>JS_PROP_THROW</code>：如果<code>JS_SetPropertyXXX</code>或<code>JS_DefinePropertyXXX</code>产生了非法行为，抛出一个异常。</li>
+<li><code>JS_PROP_THROW_STRICT</code>：在严格模式下判断是否非法并抛出异常</li>
+</ul>
+<h2 id="删除属性"><a class="header" href="#删除属性">删除属性</a></h2>
+<p>使用<code>JS_DeleteProperty</code>函数。</p>
+<h2 id="js_setproperty和js_defineproperty的区别"><a class="header" href="#js_setproperty和js_defineproperty的区别">JS_SetProperty和JS_DefineProperty的区别</a></h2>
+<p><code>JS_SetPropertyXXX</code>相当于JS中的复制。当没有这个属性的时候，赋值时会生成一份属性。但不能给<code>const</code>属性赋值：</p>
+<pre><code class="language-cpp">JS_SetPropertyStr(ctx, global_this, "const_global_var2", new_obj); // error!
+</code></pre>
+<p>而<code>JS_DefinePropertyXXX</code>则是<strong>定义</strong>属性。他等于是完全重新创建属性。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
