@@ -752,7 +752,6 @@ let alice = new Person("Alice");
 alice.sayHello();
 </code></pre>
 <p>类本身是一个函数<code>Person</code>。而其成员函数都是绑定在函数的原型<code>prototype</code>中。当实例化的时候，会调用<code>Person</code>函数初始化成员变量，并且拷贝<code>prototype</code>到对象中以找到成员函数。</p>
-<p>JavaScript ES6中引入了更现代化的<code>class</code>定义。但本质上是语法糖，会被转换到原型对象这一套语法。</p>
 <h2 id="c绑定类的例子"><a class="header" href="#c绑定类的例子">C++绑定类的例子</a></h2>
 <p>假设我们有个Person类：</p>
 <pre><code class="language-cpp">struct Person {
@@ -934,6 +933,23 @@ int JS_DefinePropertyGetSet(JSContext *ctx, JSValueConst this_obj, JSAtom prop, 
 <li><code>JS_PROP_THROW</code>：如果<code>JS_SetPropertyXXX</code>或<code>JS_DefinePropertyXXX</code>产生了非法行为，抛出一个异常。</li>
 <li><code>JS_PROP_THROW_STRICT</code>：在严格模式下判断是否非法并抛出异常</li>
 </ul>
+<h2 id="js_setpropertyfunctionlist"><a class="header" href="#js_setpropertyfunctionlist">JS_SetPropertyFunctionList</a></h2>
+<p>可以通过这个函数一次性绑定多个属性：</p>
+<pre><code class="language-cpp">const JSCFunctionListEntry entries[] = {
+    // bind member function
+    JS_CFUNC_DEF("introduce", 0, IntroduceBinding),
+	
+    // bind getter/settrer
+    JS_CGETSET_DEF("name", NameGetter, NameSetter),
+    JS_CGETSET_DEF("bmi", BMIBinding, nullptr),
+};
+
+JS_SetPropertyFunctionList(ctx, proto, entries, std::size(entries));
+</code></pre>
+<p>首先构造一个<code>JSCFunctionListEntry</code>数组，然后使用一些方便的宏就可以进行绑定。</p>
+<p>只需要将我们的绑定函数的函数指针传给宏即可，不需要担心函数类型不一致，宏会自动帮你处理（也就不需要<code>JSCFunctionType</code>）</p>
+<p>最后使用<code>JS_SetPropertyFunctionList</code>即可完成。</p>
+<p><strong>缺点：</strong><code>JSCFunctionListEntry[]</code>是传指针进去的。也就是说你需要保证此数组在<code>JS_Eval</code>之前是有效的。</p>
 <h2 id="删除属性"><a class="header" href="#删除属性">删除属性</a></h2>
 <p>使用<code>JS_DeleteProperty</code>函数。</p>
 <h2 id="js_setproperty和js_defineproperty的区别"><a class="header" href="#js_setproperty和js_defineproperty的区别">JS_SetProperty和JS_DefineProperty的区别</a></h2>
@@ -941,6 +957,33 @@ int JS_DefinePropertyGetSet(JSContext *ctx, JSValueConst this_obj, JSAtom prop, 
 <pre><code class="language-cpp">JS_SetPropertyStr(ctx, global_this, "const_global_var2", new_obj); // error!
 </code></pre>
 <p>而<code>JS_DefinePropertyXXX</code>则是<strong>定义</strong>属性。他等于是完全重新创建属性。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="绑定模块"><a class="header" href="#绑定模块">绑定模块</a></h1>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/06-Module">Github代码</a></p>
+<p>本节介绍如何绑定模块</p>
+<h2 id="例子-2"><a class="header" href="#例子-2">例子</a></h2>
+<p>首先需要创建模块：</p>
+<pre><code class="language-cpp">JSModuleDef* module_def = JS_NewCModule(ctx, "MyModule", ModuleInitFn);
+</code></pre>
+<p><code>JS_NewCModule</code>的签名如下：</p>
+<pre><code class="language-cpp">JSModuleDef *JS_NewCModule(JSContext *ctx, const char *name_str, JSModuleInitFunc *func)
+</code></pre>
+<p>传入模块的名称，以及一个<code>JSModuleInitFunc</code>。</p>
+<p><code>JSModuleInitFunc</code>是模块在初始化的时候调用的回调函数。一般在其中将属性绑定到模块上：</p>
+<pre><code class="language-cpp">int ModuleInitFn(JSContext* ctx, JSModuleDef* m) {
+    // set JSValue to module
+    JS_SetModuleExport(ctx, m, "Add", JS_NewCFunction(ctx, AddFnBinding, "Add", 2))
+    JS_SetModuleExport(ctx, m, "Person", gClassConstructor)
+    // 0 - success
+    // &lt; 0 - failed
+    return 0;
+}
+</code></pre>
+<p>通过<code>JS_SetModuleExport</code>将<code>JSValue</code>绑定在模块定义<code>m</code>中（也可以使用函数<code>JS_SetModuleExportList</code>）。</p>
+<p>最后，我们需要指定哪些属性是需要导出的：</p>
+<pre><code class="language-cpp">JS_AddModuleExport(ctx, module_def, "Add");
+JS_AddModuleExport(ctx, module_def, "Person");
+</code></pre>
+<p>使用<code>JS_AddModuleExport</code>可以指定导出模块中的哪些属性（也可以使用<code>JS_AddModuleExportList</code>）。</p>
 
                     </main>
 

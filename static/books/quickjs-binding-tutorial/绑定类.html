@@ -183,7 +183,6 @@ let alice = new Person("Alice");
 alice.sayHello();
 </code></pre>
 <p>类本身是一个函数<code>Person</code>。而其成员函数都是绑定在函数的原型<code>prototype</code>中。当实例化的时候，会调用<code>Person</code>函数初始化成员变量，并且拷贝<code>prototype</code>到对象中以找到成员函数。</p>
-<p>JavaScript ES6中引入了更现代化的<code>class</code>定义。但本质上是语法糖，会被转换到原型对象这一套语法。</p>
 <h2 id="c绑定类的例子"><a class="header" href="#c绑定类的例子">C++绑定类的例子</a></h2>
 <p>假设我们有个Person类：</p>
 <pre><code class="language-cpp">struct Person {

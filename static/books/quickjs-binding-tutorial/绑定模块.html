@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>更多设置对象属性的方法 - QuicksjCppBindingTutorual</title>
+        <title>绑定模块 - QuicksjCppBindingTutorual</title>
 
 
         <!-- Custom HTML head -->
@@ -166,96 +166,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="更多设置对象属性的方法"><a class="header" href="#更多设置对象属性的方法">更多设置对象属性的方法</a></h1>
-<p>在之前的绑定中，我们基本上是使用<code>JS_SetPrototypeStr</code>进行代码绑定。但还有其他的方法。</p>
-<h2 id="js_setproperty系列"><a class="header" href="#js_setproperty系列">JS_SetProperty系列</a></h2>
-<p><code>JS_SetPrototype</code>系列有如下函数：</p>
-<pre><code class="language-cpp">int JS_SetPropertyStr(JSContext *ctx, JSValueConst this_obj, const char *prop, JSValue val)
+                        <h1 id="绑定模块"><a class="header" href="#绑定模块">绑定模块</a></h1>
+<p><a href="https://github.com/VisualGMQ/quickjs-cpp-binding-demo/tree/master/demos/06-Module">Github代码</a></p>
+<p>本节介绍如何绑定模块</p>
+<h2 id="例子"><a class="header" href="#例子">例子</a></h2>
+<p>首先需要创建模块：</p>
+<pre><code class="language-cpp">JSModuleDef* module_def = JS_NewCModule(ctx, "MyModule", ModuleInitFn);
 </code></pre>
-<ul>
-<li><code>this_obj</code>：要设置到的值</li>
-<li><code>prop</code>：设置的成员名称</li>
-<li><code>val</code>：要设置的值</li>
-</ul>
-<pre><code class="language-cpp">int JS_SetProperty(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValue val)
+<p><code>JS_NewCModule</code>的签名如下：</p>
+<pre><code class="language-cpp">JSModuleDef *JS_NewCModule(JSContext *ctx, const char *name_str, JSModuleInitFunc *func)
 </code></pre>
-<p>与<code>JS_SetPropertyStr</code>的区别是第三个参数是<code>JSAtom</code>。这其实是更底层的函数。<code>JSAtom</code>就是一个字符串。只是如果你用<code>JS_NewAtom</code>创建之后你可以复用他，这样QuickJS就不用将字符串字面量在底层到处拷贝（比如使用<code>JS_SetPropertyStr</code>时）</p>
-<h2 id="js_defineproperty系列"><a class="header" href="#js_defineproperty系列">JS_DefineProperty系列</a></h2>
-<p>这个系列函数给了你更加精细的控制：</p>
-<pre><code class="language-cpp">int JS_DefineProperty(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValueConst val, JSValueConst getter, JSValueConst setter, int flags)
-int JS_DefinePropertyValue(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValue val, int flags)
-int JS_DefinePropertyValueStr(JSContext *ctx, JSValueConst this_obj, const char *prop, JSValue val, int flags)
-int JS_DefinePropertyGetSet(JSContext *ctx, JSValueConst this_obj, JSAtom prop, JSValue getter, JSValue setter, int flags)
+<p>传入模块的名称，以及一个<code>JSModuleInitFunc</code>。</p>
+<p><code>JSModuleInitFunc</code>是模块在初始化的时候调用的回调函数。一般在其中将属性绑定到模块上：</p>
+<pre><code class="language-cpp">int ModuleInitFn(JSContext* ctx, JSModuleDef* m) {
+    // set JSValue to module
+    JS_SetModuleExport(ctx, m, "Add", JS_NewCFunction(ctx, AddFnBinding, "Add", 2))
+    JS_SetModuleExport(ctx, m, "Person", gClassConstructor)
+    // 0 - success
+    // &lt; 0 - failed
+    return 0;
+}
 </code></pre>
-<p>同样的，有带有<code>JSAtom</code>和直接使用字符串的。但都多出了<code>int flags</code>这个参数。取值如下：</p>
-<pre><code class="language-cpp">#define JS_PROP_CONFIGURABLE  (1 &lt;&lt; 0)
-#define JS_PROP_WRITABLE      (1 &lt;&lt; 1)
-#define JS_PROP_ENUMERABLE    (1 &lt;&lt; 2)
-#define JS_PROP_C_W_E         (JS_PROP_CONFIGURABLE | JS_PROP_WRITABLE | JS_PROP_ENUMERABLE)
-#define JS_PROP_LENGTH        (1 &lt;&lt; 3) /* used internally in Arrays */
-#define JS_PROP_TMASK         (3 &lt;&lt; 4) /* mask for NORMAL, GETSET, VARREF, AUTOINIT */
-#define JS_PROP_NORMAL         (0 &lt;&lt; 4)
-#define JS_PROP_GETSET         (1 &lt;&lt; 4)
-#define JS_PROP_VARREF         (2 &lt;&lt; 4) /* used internally */
-#define JS_PROP_AUTOINIT       (3 &lt;&lt; 4) /* used internally */
-/* throw an exception if false would be returned
-   (JS_DefineProperty/JS_SetProperty) */
-#define JS_PROP_THROW            (1 &lt;&lt; 14)
-/* throw an exception if false would be returned in strict mode
-   (JS_SetProperty) */
-#define JS_PROP_THROW_STRICT     (1 &lt;&lt; 15)
+<p>通过<code>JS_SetModuleExport</code>将<code>JSValue</code>绑定在模块定义<code>m</code>中（也可以使用函数<code>JS_SetModuleExportList</code>）。</p>
+<p>最后，我们需要指定哪些属性是需要导出的：</p>
+<pre><code class="language-cpp">JS_AddModuleExport(ctx, module_def, "Add");
+JS_AddModuleExport(ctx, module_def, "Person");
 </code></pre>
-<ul>
-<li><code>JS_PROP_NORMAL</code>：默认值，无任何属性</li>
-<li><code>JS_PROP_ENUMERABLE</code>：属性可被枚举（可被<code>for...in</code>遍历到）</li>
-<li><code>JS_PROP_WRITABLE</code>：可写入</li>
-<li><code>JS_PROP_CONFIGURABLE</code>：属性的配置可被修改。如果第一次使用<code>JS_DefinePropertyXXX</code>未指定这个值，那之后使用<code>JS_DefinePropertyXXX</code>不允许修改属性的PROP。</li>
-<li><code>JS_PROP_C_W_E</code>：<code>JS_PROP_CONFIGURABLE</code>,<code>JS_PROP_WRITABLE</code>,<code>JS_PROP_ENUMERABLE</code>的组合</li>
-<li><code>JS_PROP_GETSET</code>：标识属性是getter/setter（一般和<code>JS_DefineProperty</code>配合使用）。<strong>注意：</strong>
-<ol>
-<li>使用这个枚举的时候还需要配合<code>JS_PROP_HAS_GET</code>,<code>JS_PROP_HAS_SET</code>来告诉QuickJS是否有getter/setter</li>
-<li>传入的getter/setter相关<code>JSValue</code><strong>需要被<code>JS_FreeValue</code></strong>，因为底层调用了<code>js_dup</code></li>
-</ol>
-</li>
-<li><code>JS_PROP_THROW</code>：如果<code>JS_SetPropertyXXX</code>或<code>JS_DefinePropertyXXX</code>产生了非法行为，抛出一个异常。</li>
-<li><code>JS_PROP_THROW_STRICT</code>：在严格模式下判断是否非法并抛出异常</li>
-</ul>
-<h2 id="js_setpropertyfunctionlist"><a class="header" href="#js_setpropertyfunctionlist">JS_SetPropertyFunctionList</a></h2>
-<p>可以通过这个函数一次性绑定多个属性：</p>
-<pre><code class="language-cpp">const JSCFunctionListEntry entries[] = {
-    // bind member function
-    JS_CFUNC_DEF("introduce", 0, IntroduceBinding),
-	
-    // bind getter/settrer
-    JS_CGETSET_DEF("name", NameGetter, NameSetter),
-    JS_CGETSET_DEF("bmi", BMIBinding, nullptr),
-};
-
-JS_SetPropertyFunctionList(ctx, proto, entries, std::size(entries));
-</code></pre>
-<p>首先构造一个<code>JSCFunctionListEntry</code>数组，然后使用一些方便的宏就可以进行绑定。</p>
-<p>只需要将我们的绑定函数的函数指针传给宏即可，不需要担心函数类型不一致，宏会自动帮你处理（也就不需要<code>JSCFunctionType</code>）</p>
-<p>最后使用<code>JS_SetPropertyFunctionList</code>即可完成。</p>
-<p><strong>缺点：</strong><code>JSCFunctionListEntry[]</code>是传指针进去的。也就是说你需要保证此数组在<code>JS_Eval</code>之前是有效的。</p>
-<h2 id="删除属性"><a class="header" href="#删除属性">删除属性</a></h2>
-<p>使用<code>JS_DeleteProperty</code>函数。</p>
-<h2 id="js_setproperty和js_defineproperty的区别"><a class="header" href="#js_setproperty和js_defineproperty的区别">JS_SetProperty和JS_DefineProperty的区别</a></h2>
-<p><code>JS_SetPropertyXXX</code>相当于JS中的复制。当没有这个属性的时候，赋值时会生成一份属性。但不能给<code>const</code>属性赋值：</p>
-<pre><code class="language-cpp">JS_SetPropertyStr(ctx, global_this, "const_global_var2", new_obj); // error!
-</code></pre>
-<p>而<code>JS_DefinePropertyXXX</code>则是<strong>定义</strong>属性。他等于是完全重新创建属性。</p>
+<p>使用<code>JS_AddModuleExport</code>可以指定导出模块中的哪些属性（也可以使用<code>JS_AddModuleExportList</code>）。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="绑定类.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="设置对象属性的方法.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="绑定模块.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -263,13 +209,10 @@ JS_SetPropertyFunctionList(ctx, proto, entries, std::size(entries));
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="绑定类.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="设置对象属性的方法.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="绑定模块.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
