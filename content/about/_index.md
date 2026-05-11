@@ -18,7 +18,6 @@ draft: false
     * 游戏开发相关：
         * [SDL入门教程](https://space.bilibili.com/256768793/channel/collectiondetail?sid=545545)
         * [ECS框架造轮子](https://space.bilibili.com/256768793/channel/collectiondetail?sid=999942) [Github地址](https://github.com/VisualGMQ/gmq_header)：从0开始用C++制作ECS框架，参考了Entitas，EnTT等开源库的实现
+        * ECS源码解析：[PPT](/ecs_ppt/ppt.zip)
 * 我编写的程序
     * [自制小程序合集](https://visualgmq.github.io/projects/)
-    * [Grogue](https://visualgmq.github.io/grogue/)是我正在制作的一款Roguelite游戏，目前正在持续开发，这里是开发日志。游戏可[在线游玩](https://visualgmq.github.io/projects/grogue-demo/grogue.html)
-    * [YAGTE](https://github.com/VisualGMQ/yagte)：Yet Another Geometric Tool Engine。仿照[David Eberly的Geomentric Tool库](https://www.geometrictools.com/index.html)使用Rust进行仿写，用于学习其中的知识并做一些未来可用的代码
