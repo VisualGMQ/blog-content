@@ -12,7 +12,7 @@ categories:
 
 此论文基于GJK原始论文[^2]。阅读本文前也可阅读原始论文，或阅读我[这篇]({{< relref "/posts/GJK原始论文解析.md" >}})的原始论文解析。
 
-由于这篇论文是Gino Van Den Berge写的。我后文中就称其为GinoGJK。
+由于这篇论文是Gino Van Den Bergen写的。我后文中就称其为GinoGJK。
 
 GinoGJK是目前游戏物理引擎中广泛采用的GJK实现。此论文的代码在Github[^3]。几乎是现代GJK的标准实现。十分建议参考。本论文也是偏工程向的，看起来比原始GJK论文舒服很多。
 
