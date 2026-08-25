@@ -109,37 +109,52 @@ $$
 ##### 极坐标系$(r, \theta)$
 
 将力分解为沿着质点矢径的$F_r$和垂直于$F_r$的$F_\theta$。这样合力为：
+
 $$
 F = F_r \hat{r} + F_\theta \hat{\theta}
 $$
+
 而加速度是位置的二阶导数，就有：
+
 $$
 \begin{gathered}
 \mathbf{r} = r\hat{r} \\
 d\mathbf{r} = dr \hat{r} + rd\hat{r}
 \end{gathered}
 $$
+
 而$d\hat{r} = \Delta{\hat{r}} = \mathbf{\hat{r_2}} - \mathbf{\hat{r_1}}$，由变化前后的位置之差，在极小情况下，可以视为方向为$\hat{\theta}$，大小使用弧长运算：
+
 $$
 |{d\hat{r}}| = rd\theta
 $$
+
 得到的微分：
+
 $$
 \Delta{\hat{r}} = \Delta \theta \hat{\theta}
 $$
+
 那么：
+
 $$
 \frac{d\hat{r}}{dt} = \frac{d\theta}{dt}\hat{\theta} = \dot{\theta}\hat{\theta}
 $$
+
 带入$dr$的表达式就能得到沿着矢径位置的一阶微分（即速度）：
+
 $$
 \frac{d\mathbf{r}}{dt} = \dot{r}\hat{r} + r\dot{\theta}\hat{\theta}
 $$
+
 那么沿着$\hat{\theta}$方向的速度就是：
+
 $$
 v_\theta = r\dot{\theta} = r \omega
 $$
+
 那么二阶导数就是在一阶导上再求导：
+
 $$
 \begin{cases}
 a_r = \ddot{r} - r\dot{\theta^2} \\
@@ -177,9 +192,11 @@ R就是最后的质心（Center of Mass，CM）
 #### 做功
 
 功的定义是力沿着路径的第二类曲线积分：
+
 $$
 W = \int \mathbf{F} d\mathbf{r}
 $$
+
 功是能量的搬运工。功可以将一种能量变换为另一种能量。功是导致能量改变的原因。
 
 能量就是由功来定义的。
@@ -187,10 +204,13 @@ $$
 #### 动能(Kinematic Energy)
 
 缩写为`KE`，用`T`表示。为：
+
 $$
 T = \frac{1}{2}mv^2
 $$
+
 可由牛顿第二定律推导得到：
+
 $$
 \begin{gathered}
 \mathbf{F} = m\ddot{\mathbf{r}} \\
@@ -198,6 +218,7 @@ $$
 W = \int \mathbf{F} d\mathbf{r} = \int m\ddot{\mathbf{r}}d\mathbf{r} = m\dot{\mathbf{r}} = m\mathbf{v} = \dot{(\frac{1}{2}mv^2)} = \dot{T}
 \end{gathered}
 $$
+
 这个式子同时也彰显了**动能定理**：力做的功($\int \mathbf{F}d\mathbf{r}$)是动能的改变量($(\frac{1}{2}mv^2)^{'}$)。
 
 #### 势能(Potential Energy)
@@ -224,12 +245,15 @@ $$
 > 势能是保守力从当前位置运动到势能零点所做的功
 
 即：
+
 $$
 \int \mathbf{F_cons} d\mathbf{r} = 0 - U = -U
 $$
+
 注意**保守力做正功会导致势能减少而不是增大。**
 
 保守力是势能函数的梯度，这个事情可以从势能的定义得到：
+
 $$
 \begin{gathered}
 W = \int \mathbf{F_cons} d\mathbf{r} = -\dot{U} \\
@@ -239,6 +263,7 @@ F(\mathbf{r})d\mathbf{r} = F_x dx + F_y dy + F_z dz \\
 (\Delta F_x dx + \Delta F_y dy + \Delta F_z dz) = -\dot{U} = - \nabla U
 \end{gathered}
 $$
+
 右式就是$-\nabla U$。
 
 ##### 随时间变化的势能
@@ -266,27 +291,33 @@ $$
 #### 机械能
 
 动能和势能的综合称为机械能:
+
 $$
 E = T + U
 $$
+
 机械能守恒：
 
 > 系统只有保守力做功时，机械能为固定常数
 
 因为，当只有保守力做功时，保守力沿任一路径所做功为：
+
 $$
 \begin{gathered}
 W = \Delta{T} \\
 W = -\Delta{U}
 \end{gathered}
 $$
+
 那显然，$\Delta{T} = -\Delta{U}$，根据机械能定义：
+
 $$
 \begin{gathered}
 \Delta E = \Delta(T + U) = \Delta T + \Delta U = 0 \\
 \int dE = E = C
 \end{gathered}
 $$
+
 当存在非保守力做功时，将不满足机械能守恒。此时系统会收到/散出能量。
 
 比如你在水平地面上用力推重物。此时重力不作功，势能不变。但是你的力做功，导致能量从你的身体流向物体，从而增大了其动能，导致机械能增大。
@@ -316,6 +347,7 @@ $$
 #### 通过机械能得到物体的运动方程
 
 如果机械能守恒，并且我们知道势能函数$U(\mathbf{r})$，那么可以通过机械能分析任意位置处物体的运动方程：
+
 $$
 \begin{gathered}
 E = T + U = \frac{1}{2}m\dot{\mathbf{r}}^2 + U(\mathbf{r}) \\
@@ -323,22 +355,27 @@ E = T + U = \frac{1}{2}m\dot{\mathbf{r}}^2 + U(\mathbf{r}) \\
 \dot{r} = \pm \sqrt{\frac{2}{m}(E-U(\mathbf{r}))}
 \end{gathered}
 $$
+
 然后有：
+
 $$
 \begin{gathered}
 \dot{\mathbf{r}} = \frac{d\mathbf{r}}{dt} \Rightarrow dt = \frac{d\mathbf{r}}{\dot{\mathbf{r}}} \\
 t = \int \frac{d\mathbf{r}}{\dot{\mathbf{r}}} = \int \frac{d\mathbf{r}}{\pm \sqrt{\frac{2}{m}(E-U(\mathbf{r}))}}=\pm \sqrt{\frac{m}{2}} \int \frac{d\mathbf{r}}{\sqrt{E - U(\mathbf{r})}}
 \end{gathered}
 $$
+
 这样就可以得到$t$对$\mathbf{r}$的函数。
 
 比如任意小球从空中以静止情况向下坠落。不考虑空气阻力，假设势能0点为刚开始静止的点。那么根据刚才推导的公式，有：
+
 $$
 \begin{gathered}
 \dot{\mathbf{r}} = \sqrt{\frac{2}{m}} \sqrt{0 - (-mgh)} = \sqrt{2gh} \\
 t = \int \frac{dh}{\sqrt{2gh}} = \sqrt{\frac{2h}{g}} \Rightarrow h = \frac{gt^2}{2}
 \end{gathered}
 $$
+
 和我们用牛顿力学推出的公式一样。
 
 ### 震动和弹簧
