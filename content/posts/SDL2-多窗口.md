@@ -59,5 +59,4 @@ int main(int argc, char** args){
 }
 ```
 最后的结果是这样：
-![c6ecf40f2dec41aa58acbf18133ce778.png](evernotecid://CC4AE303-7075-41F1-88CC-9FC46AD06331/appyinxiangcom/20164043/ENResource/p322)
 需要注意的是这里的事件处理，我们使用的是event.window。

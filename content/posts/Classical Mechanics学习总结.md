@@ -36,7 +36,7 @@ draft: true
 
 研究物理对象时必须定下参考系。从概念上分为两种：
 
-1. 惯性系：牛顿第一定律（由此可以推导出也适用于其他两定律）成立的参考系，即物体在不受力的情况下拥有常量速度C（注：C可以为0）
+1. 惯性系：牛顿第一定律（由此可以推导出也适用于其他两定律）成立的参考系，即物体在不受力的情况下拥有常量速度$C$（注：$C$可以为0）
 
    惯性系只能静止或者做匀速运动，本身不能旋转。
 
@@ -161,6 +161,28 @@ a_r = \ddot{r} - r\dot{\theta^2} \\
 a_\theta = r\ddot{\theta} + 2\dot{r}\dot{\theta}
 \end{cases}
 $$
+### 转动时的量
+
+转动时的角度记为$\theta$。而角速度就是角度在单位时间内的变化，用$\omega$表示，是绕着某个轴旋转的物体的角度的导数：
+
+$$
+\pmb{\omega} = \pmb{\dot{\theta}} = \frac{d\pmb{\theta}}{dt}
+$$
+
+角速度是矢量，其方向是转轴的正方向，而符号使用右手定则确定。
+
+和任意点$p$的线速度的关系为：
+
+$$
+\pmb{v}_p = \pmb{\omega} \times \pmb{r}
+$$
+其中$\pmb{r}$是轴上到$p$点的，垂直于轴的位置矢量。
+
+证明使用弧长公式：$\pmb{\omega} = \pmb{\dot{\theta}}$，而线速度则是$\dot{\pmb{\theta}}$扫过的弧度的导数$\dot{\pmb{l}}$，方向指向弧的切线方向。那么找到旋转中心到$p$点的位矢$\pmb{r}$（$\pmb{r}$要垂直于旋转轴），根据弧长公式可以得到：$d\pmb{l} = \theta r = |d\pmb{\theta}| \cdot |\pmb{r}| \cdot \sin(\pmb{r}, d\pmb{\theta}) = d\pmb{\theta} \times \pmb{r}$。那么速度就是弧长的该变量对时间的导数，就变成$\pmb{\omega} \times \pmb{r}$。
+
+注意：这里
+
+
 
 ### 动量守恒定量
 
@@ -170,6 +192,14 @@ $$
 
 动量守恒比第三定律更本质。在电场例子中，整个场和电荷是动量守恒的。
 
+### 矩
+
+位置向量$\vec{r}$和某个矢量$\vec{q}$叉乘的结果叫做矩：
+
+$$
+\vec{\tau} = \vec{r} \times \vec{q}
+$$
+比如和力叉乘就叫做力矩。和动量叉乘就叫做动量矩。
 ### 质心公式
 
 $$
@@ -181,13 +211,48 @@ $$
 
 R就是最后的质心（Center of Mass，CM）
 
+### 有心力
+
+> 力的作用线恒通过某固定点的力。此固定点叫力心
+
+有心力一般只与到力心的距离有关，记为：
+
+$$
+\vec{F} = F(r)\vec{e_r}
+$$
+其中$\vec{e_r}$是有心力的方向。
+
+有如下性质：
+
+* 动量矩守恒：因为力矩$\vec{r} \times \vec{F} = 0$。 
 ### 刚体动力学
 
+#### 角速度
 
+在定义旋转有关的量之前，必须先定义原点$O$。
+
+
+### 角动量
+
+角动量需由线动量定义：
+
+$$
+\pmb{L} = \pmb{r} \times \pmb{p}
+$$
 
 ### 能量
 
 能量有多种形式（动能，势能，热能等）。
+
+系统的总能量 = 内能 + 机械能。
+
+内能就是系统内分子的能量，是内部粒子相对质心随机运动/相互作用的能量。和系统的运动无关。一般受热传递效应。
+
+而机械能一般受做功影响。
+
+根据热力学第一定律，系统能量的改变只受做功和热传递影响。
+
+比如你推一堵墙，虽然没有位移（不作功），但是你的能量转换为自己身体的热量通过热传递散播到空气中了，所以你总体的能量减少了会感到疲惫。
 
 #### 做功
 
@@ -197,9 +262,7 @@ $$
 W = \int \mathbf{F} d\mathbf{r}
 $$
 
-功是能量的搬运工。功可以将一种能量变换为另一种能量。功是导致能量改变的原因。
-
-能量就是由功来定义的。
+功是能量的搬运工。功可以将一种能量变换为另一种能量。
 
 #### 动能(Kinematic Energy)
 
@@ -255,13 +318,13 @@ $$
 保守力是势能函数的梯度，这个事情可以从势能的定义得到：
 
 $$
-\begin{gathered}
-W = \int \mathbf{F_cons} d\mathbf{r} = -\dot{U} \\
-而F是值和\mathbf{r}有关的函数，即F(\mathbf{r})，那么有：\\
-F(\mathbf{r})d\mathbf{r} = F_x dx + F_y dy + F_z dz \\
-\dot{U} = \lim_{\Delta\mathbf{r}\rightarrow 0} \Delta U(\mathbf{r} \rightarrow \mathbf{r} + \Delta \mathbf{r}) = \lim_{\Delta\mathbf{r}\rightarrow 0} (U(\mathbf{r} + \Delta \mathbf{r}) - U(\mathbf{r})) = \lim_{\Delta\mathbf{r}\rightarrow 0}(- (F(\mathbf{r} + \Delta \mathbf{r}) - F(\mathbf{r}))) = - (\Delta F_x dx + \Delta F_y dy + \Delta F_z dz) \\
-(\Delta F_x dx + \Delta F_y dy + \Delta F_z dz) = -\dot{U} = - \nabla U
-\end{gathered}
+\begin{aligned}
+& W = \int \mathbf{F_cons} d\mathbf{r} = -\dot{U} \\
+& 而F是值和\mathbf{r}有关的函数，即F(\mathbf{r})，那么有：\\
+& F(\mathbf{r})d\mathbf{r} = F_x dx + F_y dy + F_z dz \\
+& \dot{U} = \lim_{\Delta\mathbf{r}\rightarrow 0} \Delta U(\mathbf{r} \rightarrow \mathbf{r} + \Delta \mathbf{r}) = \lim_{\Delta\mathbf{r}\rightarrow 0} (U(\mathbf{r} + \Delta \mathbf{r}) - U(\mathbf{r})) = \lim_{\Delta\mathbf{r}\rightarrow 0}(- (F(\mathbf{r} + \Delta \mathbf{r}) - F(\mathbf{r}))) = - (\Delta F_x dx + \Delta F_y dy + \Delta F_z dz) \\
+& (\Delta F_x dx + \Delta F_y dy + \Delta F_z dz) = -\dot{U} = - \nabla U
+\end{aligned}
 $$
 
 右式就是$-\nabla U$。
@@ -290,7 +353,7 @@ $$
 
 #### 机械能
 
-动能和势能的综合称为机械能:
+动能和势能的总和称为机械能:
 
 $$
 E = T + U
@@ -317,6 +380,8 @@ $$
 \int dE = E = C
 \end{gathered}
 $$
+
+即当只有保守力做功时，能量只在动能和势能之间转换，但系统本身没有散出/接收能量。
 
 当存在非保守力做功时，将不满足机械能守恒。此时系统会收到/散出能量。
 

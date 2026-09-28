@@ -1,0 +1,149 @@
+{{- /* ==========================================================================
+  Bilibili 短代码（支持 link / facade / player 三种模式）
+  --------------------------------------------------------------------------
+  用法：
+    {{< bilibili BV1xx411c7mD >}}
+    {{< bilibili "https://www.bilibili.com/video/BV1xx411c7mD?p=2" >}}
+    {{< bilibili av170001 mode="link" title="标题" cover="封面URL" >}}
+
+  参数：
+    id / bvid / bv / 位置参数 : BV 号、av 号、纯数字 aid，或完整 bilibili 链接
+    mode         : link(默认) 跳转卡片 | facade 点击播放 | player 内嵌播放器
+    title        : 卡片/封面上的标题
+    cover        : 封面图 URL（link / facade 用；留空则自动调接口获取）
+    auto         : 是否自动获取标题/封面，默认 true（player 模式不需要，故不请求）
+    page         : 分 P，默认 1（链接里的 ?p= 会自动识别）
+    danmaku      : 是否显示弹幕，默认 false
+    autoplay     : 是否自动播放，默认 false
+    high_quality : 是否高清，默认 true
+    caption      : 图注
+  注意：b23.tv 短链无法在构建时解析，请填 BV / av 号或完整链接。
+   ========================================================================== */ -}}
+
+{{- $truthy := slice "true" "1" "yes" "on" -}}
+
+{{- $input := .Get "id" | default (.Get "bvid") | default (.Get "bv") | default (.Get "av") | default (.Get "aid") | default (.Get 0) -}}
+{{- if not $input -}}
+  {{- errorf "bilibili shortcode: 缺少 BV 号 / av 号 / 链接: %s" .Position -}}
+{{- end -}}
+{{- $input = trim (string $input) " " -}}
+
+{{- $bvid := "" -}}
+{{- $aid := "" -}}
+{{- if findRE "^[Bb][Vv][0-9A-Za-z]+$" $input -}}
+  {{- $bvid = $input -}}
+{{- else if findRE "^[Aa][Vv][0-9]+$" $input -}}
+  {{- $aid = substr $input 2 -}}
+{{- else if findRE "^[0-9]+$" $input -}}
+  {{- $aid = $input -}}
+{{- else -}}
+  {{- with (findRE "[Bb][Vv][0-9A-Za-z]+" $input) -}}
+    {{- $bvid = index . 0 -}}
+  {{- end -}}
+  {{- if not $bvid -}}
+    {{- with (findRE "[Aa][Vv][0-9]+" $input) -}}
+      {{- $aid = substr (index . 0) 2 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (not $bvid) (not $aid) -}}
+  {{- errorf "bilibili shortcode: 无法从 %q 中识别 BV / av 号: %s" $input .Position -}}
+{{- end -}}
+
+{{- $u := urls.Parse $input -}}
+{{- $page := "" -}}
+{{- with .Get "page" -}}{{- $page = string . -}}{{- end -}}
+{{- if not $page -}}
+  {{- with $u.Query.Get "p" -}}{{- $page = . -}}{{- end -}}
+{{- end -}}
+{{- $page = $page | default "1" -}}
+
+{{- $danmaku := false -}}
+{{- with .Get "danmaku" -}}{{- $danmaku = in $truthy (lower .) -}}{{- end -}}
+{{- $autoplay := false -}}
+{{- with .Get "autoplay" -}}{{- $autoplay = in $truthy (lower .) -}}{{- end -}}
+{{- $highQuality := true -}}
+{{- with .Get "high_quality" -}}{{- $highQuality = in $truthy (lower .) -}}{{- end -}}
+
+{{- $mode := lower (.Get "mode" | default "link") -}}
+{{- $title := .Get "title" | default "" -}}
+{{- $cover := .Get "cover" | default "" -}}
+{{- $caption := .Get "caption" | default "" -}}
+
+{{- /* 未提供封面/标题时，自动调用 bilibili 接口获取（player 模式不需要） */ -}}
+{{- $auto := true -}}
+{{- with .Get "auto" -}}{{- $auto = in $truthy (lower .) -}}{{- end -}}
+{{- if and $auto (ne $mode "player") (or (eq $cover "") (eq $title "")) -}}
+  {{- $api := printf "https://api.bilibili.com/x/web-interface/view?%s" (cond (ne $bvid "") (printf "bvid=%s" $bvid) (printf "aid=%s" $aid)) -}}
+  {{- $headers := dict
+      "User-Agent" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+      "Referer" "https://www.bilibili.com" -}}
+  {{- $meta := dict -}}
+  {{- with try (resources.GetRemote $api (dict "headers" $headers)) -}}
+    {{- if not .Err -}}
+      {{- $meta = .Value.Content | transform.Unmarshal -}}
+    {{- else -}}
+      {{- warnf "bilibili shortcode: 自动获取视频信息失败（%s）：%s" $input .Err -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $meta.data -}}
+    {{- if eq $cover "" -}}
+      {{- with .pic -}}{{- $cover = replace . "http://" "https://" -}}{{- end -}}
+    {{- end -}}
+    {{- if eq $title "" -}}
+      {{- with .title -}}{{- $title = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $query := slice -}}
+{{- if $bvid -}}
+  {{- $query = $query | append (printf "bvid=%s" $bvid) -}}
+{{- else -}}
+  {{- $query = $query | append (printf "aid=%s" $aid) -}}
+{{- end -}}
+{{- $query = $query | append (printf "page=%s" $page) -}}
+{{- $query = $query | append (printf "high_quality=%d" (cond $highQuality 1 0)) -}}
+{{- $query = $query | append (printf "danmaku=%d" (cond $danmaku 1 0)) -}}
+{{- $query = $query | append (printf "autoplay=%d" (cond $autoplay 1 0)) -}}
+{{- $query = $query | append "as_wide=1" -}}
+{{- $player := printf "//player.bilibili.com/player.html?%s" (delimit $query "&") -}}
+
+{{- $base := cond (ne $bvid "") (printf "https://www.bilibili.com/video/%s" $bvid) (printf "https://www.bilibili.com/video/av%s" $aid) -}}
+{{- $anchor := cond (eq $page "1") $base (printf "%s?p=%s" $base $page) -}}
+
+{{- $logoIcon := `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373Z"/></svg>` -}}
+{{- $playIcon := `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>` -}}
+
+{{- $uid := printf "bili-%s" (substr (md5 $input) 0 8) -}}
+
+<figure class="bili-figure">
+{{ if eq $mode "player" -}}
+  <div class="bili-embed">
+    <iframe src="{{ $player }}" title="{{ $title | default "Bilibili 视频" }}" frameborder="0" scrolling="no" allowfullscreen referrerpolicy="no-referrer" allow="autoplay; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+{{- else if eq $mode "facade" -}}
+  <div class="bili-embed" id="{{ $uid }}">
+    <button type="button" class="bili-facade" data-src="{{ $player }}" aria-label="{{ $title | default "播放视频" }}" onclick="var f=document.createElement('iframe');f.src=this.getAttribute('data-src');f.setAttribute('frameborder','0');f.setAttribute('scrolling','no');f.setAttribute('allowfullscreen','');f.setAttribute('referrerpolicy','no-referrer');f.setAttribute('allow','autoplay; fullscreen; picture-in-picture');this.parentNode.replaceChild(f,this);">
+      {{- with $cover }}<img class="bili-facade__cover" src="{{ . }}" alt="{{ $title }}" loading="lazy">{{ end -}}
+      <span class="bili-facade__mask"><span class="bili-facade__play">{{ $playIcon | safeHTML }}</span></span>
+      {{- with $title }}<span class="bili-facade__title">{{ . }}</span>{{ end -}}
+    </button>
+  </div>
+{{- else -}}
+  <a class="bili-card" href="{{ $anchor }}" target="_blank" rel="noopener noreferrer">
+    {{- with $cover -}}
+      <img class="bili-card__cover" src="{{ . }}" alt="{{ $title }}" loading="lazy">
+    {{- else -}}
+      <span class="bili-card__logo">{{ $logoIcon | safeHTML }}</span>
+    {{- end -}}
+    <span class="bili-card__body">
+      {{- with $title }}<span class="bili-card__title">{{ . }}</span>{{ end -}}
+      <span class="bili-card__hint">在 Bilibili 观看</span>
+    </span>
+  </a>
+{{- end }}
+{{- with $caption }}
+  <figcaption class="bili-caption">{{ . | markdownify }}</figcaption>
+{{- end }}
+</figure>

@@ -3,3 +3,7 @@ authors = ["VisualGMQ"]
 language = "zh"
 src = "src"
 title = "QuicksjCppBindingTutorual"
+
+# 输出到 Hugo 的 static 目录，避免 HTML 产物被当成 content 处理
+[build]
+build-dir = "../../../static/books/quickjs-binding-tutorial"

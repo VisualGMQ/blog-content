@@ -1,0 +1,199 @@
+/* ==========================================================================
+   自定义样式：Bilibili 短代码
+   说明：Blowfish 使用预编译 CSS，站点自定义样式放在 assets/css/custom.css，
+        主题会自动通过 resources.Get "css/custom.css" 加载。
+   ========================================================================== */
+
+.bili-figure {
+  margin: 1.25rem 0;
+}
+
+/* ---------- 链接卡片 ---------- */
+.bili-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgb(var(--color-neutral-200));
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: rgb(var(--color-neutral-50));
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.dark .bili-card {
+  border-color: rgb(var(--color-neutral-700));
+  background: rgb(var(--color-neutral-800));
+}
+
+.bili-card:hover {
+  border-color: rgb(var(--color-primary-500));
+}
+
+.bili-card__logo {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  background: #00a1d6;
+  color: #fff;
+}
+
+.bili-card__logo svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.bili-card__cover {
+  flex: none;
+  display: block;
+  width: 10rem;
+  height: 6rem;
+  object-fit: cover;
+}
+
+.bili-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.5rem 1rem 0.5rem 0;
+}
+
+.bili-card__title {
+  font-weight: 600;
+  color: rgb(var(--color-neutral-800));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dark .bili-card__title {
+  color: rgb(var(--color-neutral-100));
+}
+
+.bili-card__hint {
+  font-size: 0.85rem;
+  color: rgb(var(--color-neutral-500));
+}
+
+.dark .bili-card__hint {
+  color: rgb(var(--color-neutral-400));
+}
+
+/* ---------- 内嵌播放器 ---------- */
+.bili-embed {
+  position: relative;
+  border: 1px solid rgb(var(--color-neutral-200));
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: #000;
+}
+
+.dark .bili-embed {
+  border-color: rgb(var(--color-neutral-700));
+}
+
+.bili-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+/* ---------- 点击播放（facade） ---------- */
+.bili-facade {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: 0;
+  background: #000;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.bili-facade__cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.bili-facade:hover .bili-facade__cover {
+  opacity: 1;
+}
+
+.bili-facade__mask {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.bili-facade:hover .bili-facade__mask {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.bili-facade__play {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background: rgba(0, 161, 214, 0.92);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.bili-facade__play svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-left: 0.15rem;
+}
+
+.bili-facade__title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+}
+
+/* ---------- 图注 ---------- */
+.bili-caption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgb(var(--color-neutral-500));
+}
+
+.dark .bili-caption {
+  color: rgb(var(--color-neutral-400));
+}
+
+/* ==========================================================================
+   加宽文章正文显示宽度
+   Blowfish 默认正文宽度写死为 Tailwind 的 `max-w-prose`（65ch，偏窄），
+   这里用站点自定义样式统一放宽。custom.css 在主题样式之后加载，优先级更高。
+   ========================================================================== */
+.article-content,
+#single_header,
+.prose > .max-w-prose, /* 列表 / section 页（如 about）的正文容器 */
+article > footer {
+  max-width: 64rem;
+}

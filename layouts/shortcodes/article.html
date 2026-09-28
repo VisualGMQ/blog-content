@@ -1,0 +1,39 @@
+{{- /*
+  覆盖主题的 article 短代码，额外支持 pageRef（用内容路径引用页面）。
+  - link      ：同主题行为，需填页面的 .RelPermalink（中文会被百分号编码，不好用）
+  - pageRef   ：内容路径，例如 "/posts/从0开始制作游戏物理引擎（一）"（推荐）
+  其余参数 showSummary / compactSummary 与主题一致。
+  背景：Blowfish 原版仅用 RelPermalink 精确匹配，含中文的页面路径会被编码，
+        直接写中文匹配不上，故加此覆盖。
+*/ -}}
+{{- $link := .Get "link" -}}
+{{- $pageRef := .Get "pageRef" -}}
+{{- $showSummary := .Get "showSummary" -}}
+{{- $compactSummary := .Get "compactSummary" | default false -}}
+{{- $position := .Position -}}
+{{- $target := .Page -}}
+
+{{- if $pageRef -}}
+  {{- with site.GetPage $pageRef -}}
+    {{- $target = . -}}
+  {{- else -}}
+    {{- warnf "article shortcode: pageRef %q 未找到: %s" $pageRef $position -}}
+    {{- $target = "" -}}
+  {{- end -}}
+{{- else if $link -}}
+  {{- $link = printf "%s%s" site.LanguagePrefix $link -}}
+  {{- if ne $link .Page.RelPermalink -}}
+    {{- $pages := slice -}}
+    {{- range hugo.Sites -}}
+      {{- $pages = $pages | append .Pages -}}
+    {{- end -}}
+    {{- $target = index (first 1 (where $pages "RelPermalink" $link)) 0 -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $target -}}
+<section class="space-y-10 w-full">
+  {{- $context := dict "target" $target "showSummary" $showSummary "compactSummary" $compactSummary -}}
+  {{- partial "article-link/_shortcode.html" $context -}}
+</section>
+{{- end -}}

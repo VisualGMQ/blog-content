@@ -21,7 +21,6 @@ tags:
 
 我们首先需要使用的是`SDL_TEXTINPUT`。这个事件的event有一个`text`成员，记录了用户输入的字符（UTF-8的）。
 这里需要注意的是，如果你使用的是英文，那么就是一次一个字符。但是如果你使用的是中文或者日文这种“**多个按键合成一个字符**”的输入法，那么当你按下空格之后就会一次性输入很多字符。比如你用搜狗输入法打出`huijia`，那么搜狗输入法的输入条会显示`回家`，然后你按下空格确认输入回家，这个时候text就是"回家"而不是"h"或者"huijia"。
-![db5889b4aa3791dcd1048552bd5f8c5e.png](evernotecid://CC4AE303-7075-41F1-88CC-9FC46AD06331/appyinxiangcom/20164043/ENResource/p351)
 搜狗输入法条
 
 于是你就可以通过这个来获得字符（而且组合键它也可以自动监测到，比如输入大小写）。但是没有办法检测到退格键和回车键，你可以通过键盘事件来检测：
@@ -38,11 +37,9 @@ if(event.type == SDL_KEYDOWN){
 **其他输入法的输入**
 需要注意的是**如果你使用中文输入法，那么情况会不大一样**，下面是将中文显示到屏幕上的一段程序的结果，你可以看到和一般文本编辑器不同的地方：
 
-![35d2e58f6141b1e7e3853c783e81be2f.png](evernotecid://CC4AE303-7075-41F1-88CC-9FC46AD06331/appyinxiangcom/20164043/ENResource/p352)
 
 没错，我们在输入的时候居然没有在屏幕上显示。只有我们按下空格键（或者选择你要输入的文本）之后才会显示在屏幕上。也就是说输入法对文本的转换过程是不会触发`SDL_TEXTINPUT`事件的，而是会触发`SDL_TEXTEDITING`。
 
-![3e5aa8d59cc31c820add28ce12789a48.png](evernotecid://CC4AE303-7075-41F1-88CC-9FC46AD06331/appyinxiangcom/20164043/ENResource/p353)
 正常的文本编辑器
 
 我们将这种**通过多个键生成一个字符**的方式叫做**组合(Composition)**
@@ -60,11 +57,9 @@ if(event.type == SDL_KEYDOWN){
 通过给出一个SDL_Rect来指定输入法条的位置和宽度。
 比如我的rect的x,y为0的时候，就会这样：
 
-![e8a1e52c4e798d62869aafbbd073e2cb.png](evernotecid://CC4AE303-7075-41F1-88CC-9FC46AD06331/appyinxiangcom/20164043/ENResource/p354)
 
 如果指定y=300，会这样：
 
-![f45524358512dc39e0d8df668a342986.png](evernotecid://CC4AE303-7075-41F1-88CC-9FC46AD06331/appyinxiangcom/20164043/ENResource/p355)
 
 可以看到距离明显变长了。
 
