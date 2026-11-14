@@ -16,11 +16,11 @@
       enable = true
       [goldmark.extensions.passthrough.delimiters]
         block = [['\[', '\]'], ['$$', '$$']]
-        inline = [['\(', '\)']]
+        inline = [['\(', '\)'], ['$', '$']]
 
 [highlight]
   noClasses = false
 
 [tableOfContents]
   startLevel = 2
-  endLevel = 4
+  endLevel = 5

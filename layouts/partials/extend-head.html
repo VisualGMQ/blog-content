@@ -1,11 +1,15 @@
 {{- if site.Params.enableMathJax | default true -}}
 <script>
   window.MathJax = {
+    loader: {
+      load: ["[tex]/mathtools"]
+    },
     tex: {
       inlineMath: [["$", "$"], ["\\(", "\\)"]],
       displayMath: [["$$", "$$"], ["\\[", "\\]"]],
       processEscapes: true,
-      processEnvironments: true
+      processEnvironments: true,
+      packages: { "[+]": ["mathtools"] }
     },
     options: {
       skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"],
